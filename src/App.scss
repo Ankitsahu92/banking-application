@@ -1,0 +1,15 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --project-primary-color: rgb(70, 88, 72);
+}
+
+@import "~bootstrap/scss/bootstrap.scss";
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 0;
+  margin-right: 0;
+  margin-left: 0;
+}

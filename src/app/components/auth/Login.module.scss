@@ -1,0 +1,29 @@
+.col2 {
+  min-height: 200px;
+  box-shadow: inset 0 0 10px var(--project-primary-color);
+  height: 77vh;
+  color: #fff;
+}
+
+.block {
+  margin-top: 50px !important;
+  width: 80%;
+  // height: 65%;
+  text-align: center;
+  border-radius: 5px;
+  padding: 10px;
+  /* this centers the red block horizontally within the cell */
+  margin: 0 auto;
+  /* this center the text horizontally within the red block */
+  text-align: center;
+  /* define the red block as a table ... */
+  display: table;
+}
+
+.img {
+  height: 29rem;
+  /* width: auto; */
+  margin: 10px;
+  width: calc(100% - 1em);
+  height: calc(100% - 4.5em);
+}
