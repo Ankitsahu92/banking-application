@@ -1,14 +1,19 @@
-import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.scss";
-import Login from "./app/components/auth/Login";
-import Layout from "./app/components/layout/Layout";
+import Footer from "./app/components/layout/Footer";
+import Header from "./app/components/layout/Header";
+import RootRouter from "./app/components/routes/RootRouter";
 
 function App() {
   return (
     <div className="col col-12">
-      <Layout>
-        <Login />
-      </Layout>
+      <BrowserRouter>
+        <Header />
+        <main>
+          <RootRouter />
+        </main>
+        <Footer />
+      </BrowserRouter>
     </div>
   );
 }

@@ -4,12 +4,12 @@ type Props = {};
 
 type State = {};
 
-class Layout extends Component<Props, State> {
+class Profile extends Component<Props, State> {
   state = {};
 
   render() {
-    return <>Layout</>;
+    return <div>Profile</div>;
   }
 }
 
-export default Layout;
+export default Profile;
