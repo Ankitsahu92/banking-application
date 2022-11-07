@@ -1,3 +1,11 @@
+:root {
+  --blue: #1e90ff;
+  --white: #ffffff;
+  --project-primary-color: rgb(70, 88, 72);
+  --background-primary-color: rgb(182, 205, 189);
+  --project-primary-color-light: rgb(70 88 72 / 52%);
+}
+
 * {
   padding: 0;
   margin: 0;
@@ -16,7 +24,7 @@ body {
   overflow-x: hidden;
   display: flex;
   flex-direction: column;
-  background-color: rgb(182, 205, 189);
+  background-color: var(--background-primary-color);
 }
 
 body {
@@ -41,4 +49,30 @@ main {
 
 button {
   margin: 5px;
+}
+
+.card {
+  box-shadow: inset 0 0 10px var(--project-primary-color);
+  margin: 5px;
+  padding: 5px;
+  background-color: var(--background-primary-color);
+}
+
+table {
+  padding: 10px 0;
+  width: 100%;
+  height: 100%;
+  thead {
+    font-weight: bold;
+  }
+  thead,
+  tbody {
+    text-align: center;
+  }
+}
+
+table,
+th,
+td {
+  border: 2px solid var(--project-primary-color);
 }

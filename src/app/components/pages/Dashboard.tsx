@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Card from "../common/Card";
 
 type Props = {};
 
@@ -8,7 +9,11 @@ class Dashboard extends Component<Props, State> {
   state = {};
 
   render() {
-    return <div>Dashboard</div>;
+    return (
+      <Card>
+        <div>Dashboard</div>
+      </Card>
+    );
   }
 }
 
