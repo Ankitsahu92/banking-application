@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import ForgotPassword from "../auth/ForgotPassword";
 import Login from "../auth/Login";
 import UpdatePassword from "../auth/UpdatePassword";
@@ -27,10 +27,10 @@ class RootRouter extends Component<Props, State> {
   state = {};
 
   render() {
+    const loggedIn: boolean = false;
     return (
       <Routes>
-        <Route path="/" element={<Dashboard />}></Route>
-        <Route path="/Login" element={<Login />}></Route>
+        <Route path="/login" element={<Login />}></Route>
         <Route path="/UpdatePassword" element={<UpdatePassword />}></Route>
         <Route path="/ForgotPassword" element={<ForgotPassword />}></Route>
 
@@ -72,6 +72,10 @@ class RootRouter extends Component<Props, State> {
         <Route
           path="/ApproveModifyBeneficiary"
           element={<ApproveModifyBeneficiary />}
+        ></Route>
+        <Route
+          path="/"
+          element={loggedIn ? <Dashboard /> : <Navigate replace to="/login" />}
         ></Route>
       </Routes>
     );
