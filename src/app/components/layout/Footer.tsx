@@ -11,7 +11,10 @@ class Footer extends Component<Props, State> {
   render() {
     return (
       <footer className={styles.footer}>
-        <p>© Copyright 2015 Banking Application. All rights reserved.</p>
+        <p>
+          © Copyright {new Date().getFullYear()} Banking Application. All rights
+          reserved.
+        </p>
       </footer>
     );
   }
