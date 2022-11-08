@@ -3,22 +3,21 @@ import { Routes, Route } from "react-router-dom";
 import ForgotPassword from "../auth/ForgotPassword";
 import Login from "../auth/Login";
 import UpdatePassword from "../auth/UpdatePassword";
-import AddBeneficiary from "../pages/AddBeneficiary";
-import ApproveAccount from "../pages/ApproveAccount";
-import ApproveBeneficiary from "../pages/ApproveBeneficiary";
-import CreateAccount from "../pages/CreateAccount";
-import CreateStaff from "../pages/CreateStaff";
-import CustomerRegistration from "../pages/CustomerRegistration";
-import Dashboard from "../pages/Dashboard";
-import EnableDisableStaff from "../pages/EnableDisableStaff";
-import Profile from "../pages/Profile";
-import RemoveBeneficiary from "../pages/RemoveBeneficiary";
-import SecurityQuestionMismatch from "../pages/SecurityQuestionMismatch";
-import StaffView from "../pages/StaffView";
-import Transfer from "../pages/Transfer";
-import TransferMoney from "../pages/TransferMoney";
-import ViewAccount from "../pages/ViewAccount";
-import ViewStatement from "../pages/ViewStatement";
+import AddBeneficiary from "../pages/customer/AddBeneficiary";
+import CreateAccount from "../pages/customer/CreateAccount";
+import CreateStaff from "../pages/staff/CreateStaff";
+import Dashboard from "../pages/customer/Dashboard";
+import EnableDisableStaff from "../pages/staff/EnableDisableStaff";
+import Profile from "../pages/customer/Profile";
+import RemoveBeneficiary from "../pages/customer/RemoveBeneficiary";
+import ViewAccount from "../pages/approver/ViewAccountStatement";
+import CustomerRegistration from "../pages/customer/CustomerRegistration";
+import TransferAmont from "../pages/customer/TransferAmont";
+import ViewAccouuntStatement from "../pages/customer/ViewAccouuntStatement";
+import ApproveModifyBeneficiary from "../pages/staff/ApproveModifyBeneficiary";
+import ApproveRejectCustomeAccount from "../pages/staff/ApproveRejectCustomeAccount";
+import CreditDebitAmount from "../pages/staff/CreditDebitAmount";
+import EnableBlockCustomer from "../pages/staff/EnableBlockCustomer";
 
 type Props = {};
 
@@ -34,10 +33,7 @@ class RootRouter extends Component<Props, State> {
         <Route path="/Login" element={<Login />}></Route>
         <Route path="/UpdatePassword" element={<UpdatePassword />}></Route>
         <Route path="/ForgotPassword" element={<ForgotPassword />}></Route>
-        <Route
-          path="/SecurityQuestionMismatch"
-          element={<SecurityQuestionMismatch />}
-        ></Route>
+
         <Route
           path="/CustomerRegistration"
           element={<CustomerRegistration />}
@@ -50,21 +46,33 @@ class RootRouter extends Component<Props, State> {
         <Route path="/CreateStaff" element={<CreateStaff />}></Route>
         <Route path="/ViewAccount" element={<ViewAccount />}></Route>
         <Route
-          path="/ApproveBeneficiary"
-          element={<ApproveBeneficiary />}
+          path="/ViewAccouuntStatement"
+          element={<ViewAccouuntStatement />}
         ></Route>
-        <Route path="/Transfer" element={<Transfer />}></Route>
-        <Route path="/ApproveAccount" element={<ApproveAccount />}></Route>
-        <Route path="/StaffView" element={<StaffView />}></Route>
-        <Route path="/ViewStatement" element={<ViewStatement />}></Route>
         <Route path="/Profile" element={<Profile />}></Route>
-        <Route path="/TransferMoney" element={<TransferMoney />}></Route>
+        <Route path="/TransferAmont" element={<TransferAmont />}></Route>
         <Route
           path="/RemoveBeneficiary"
           element={<RemoveBeneficiary />}
         ></Route>
         <Route path="/AddBeneficiary" element={<AddBeneficiary />}></Route>
         <Route path="/CreateAccount" element={<CreateAccount />}></Route>
+        <Route
+          path="/ApproveRejectCustomeAccount"
+          element={<ApproveRejectCustomeAccount />}
+        ></Route>
+        <Route
+          path="/EnableBlockCustomer"
+          element={<EnableBlockCustomer />}
+        ></Route>
+        <Route
+          path="/CreditDebitAmount"
+          element={<CreditDebitAmount />}
+        ></Route>
+        <Route
+          path="/ApproveModifyBeneficiary"
+          element={<ApproveModifyBeneficiary />}
+        ></Route>
       </Routes>
     );
   }
