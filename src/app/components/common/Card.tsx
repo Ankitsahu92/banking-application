@@ -1,6 +1,7 @@
 import React from "react";
 
 type Props = {
+  height?: string;
   className?: string;
   children: any;
 };
@@ -12,7 +13,13 @@ const Card = (props: Props) => {
     classs.push(props.className);
   }
 
-  return <div className={classs.join(" ")}>{props.children}</div>;
+  const height = props.height ? props.height : "auto";
+
+  return (
+    <div className={classs.join(" ")} style={{ height: height }}>
+      {props.children}
+    </div>
+  );
 };
 
 export default Card;

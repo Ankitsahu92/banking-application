@@ -27,7 +27,7 @@ class RootRouter extends Component<Props, State> {
   state = {};
 
   render() {
-    const loggedIn: boolean = false;
+    const loggedIn: boolean = true;
     return (
       <Routes>
         <Route path="/login" element={<Login />}></Route>

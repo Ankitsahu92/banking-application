@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
-
+//import img from "../../../assets/images/bank-svgrepo-com.svg";
 type Props = {};
 
 type State = {};
@@ -20,12 +20,22 @@ class Header extends Component<Props, State> {
               // this.navigate("/");
             }}
           >
+            {/* <img src={img} className="imgBackIcon" alt="img Back Icon"></img> */}
             Banking Application
           </div>
           {/* nav List */}
           <ul className={styles.navList}>
             <li className={styles.navLi}>
               <a href="void javascript(0)">Staff Corner</a>
+            </li>
+            <li className={styles.navLi}>
+              <a href="void javascript(0)">Profile</a>
+            </li>
+            <li className={styles.navLi}>
+              <a href="void javascript(0)">Logout</a>
+            </li>
+            <li className={styles.navLi}>
+              <a href="void javascript(0)">Welcom User Name</a>
             </li>
           </ul>
           {/* nav Button */}

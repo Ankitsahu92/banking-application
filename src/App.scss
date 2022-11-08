@@ -81,3 +81,13 @@ select {
 .centerAlignText {
   text-align: center;
 }
+
+.list-group-item {
+  background-color: var(--background-primary-color);
+}
+
+.list-group-item.active {
+  font-weight: bold;
+  background-color: var(--project-primary-color);
+  border-color: var(--project-primary-color);
+}
