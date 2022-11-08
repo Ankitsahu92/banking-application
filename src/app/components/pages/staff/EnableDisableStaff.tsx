@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import img from "../../../assets/images/bank-svgrepo-com.svg";
+import img from "../../../../assets/images/bank-svgrepo-com.svg";
 import Card from "../../common/Card";
 type Props = {};
 

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import styles from "./Login.module.scss";
 import bankImg from "../../../assets/images/bank.webp";
+import { Link } from "react-router-dom";
 type Props = {};
 
 type State = {};
@@ -27,44 +28,42 @@ class Login extends Component<Props, State> {
               <div className="col-10">
                 <form>
                   <div className="form-group">
-                    <label htmlFor="exampleInputEmail1">Email address</label>
+                    <label htmlFor="UserName">User Name</label>
                     <input
-                      type="email"
+                      type="text"
                       className="form-control"
-                      id="exampleInputEmail1"
-                      aria-describedby="emailHelp"
-                      placeholder="Enter email"
+                      id="UserName"
+                      aria-describedby="UserNameHelp"
+                      placeholder="Enter User Name"
                     />
-                    <small id="emailHelp" className="form-text text-muted">
-                      We'll never share your email with anyone else.
+                    <small id="UserNameHelp" className="form-text text-muted">
+                      We'll never share your user name with anyone else.
                     </small>
                   </div>
                   <div className="form-group">
-                    <label htmlFor="exampleInputPassword1">Password</label>
+                    <label htmlFor="Password">Password</label>
                     <input
                       type="password"
                       className="form-control"
-                      id="exampleInputPassword1"
-                      placeholder="Password"
+                      id="Password"
+                      placeholder="Enter Password"
                     />
                   </div>
 
                   <div className="row">
                     <div className="col col-6">
-                      <a href="#">Forgot Password</a>
+                      <Link to="/ForgotPassword">Forgot Password</Link>
                     </div>
                     <div className="col col-6" style={{ textAlign: "end" }}>
-                      <button type="submit" className="btn btn-primary">
-                        Submit
-                      </button>
+                      <button type="submit">Submit</button>
                     </div>
                   </div>
                 </form>
 
                 <br />
                 <div>
-                  Not a Customer
-                  <a href="#">Register Here</a>
+                  Not a Customer &nbsp;
+                  <Link to="/CustomerRegistration">Register Here</Link>
                 </div>
               </div>
             </div>
