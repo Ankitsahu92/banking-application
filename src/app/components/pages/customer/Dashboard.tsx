@@ -6,11 +6,24 @@ import Switch from "../../common/Switch";
 type Props = {};
 
 type State = {
-  error: boolean;
+  enableDisable: boolean;
+  dashboardList: string[];
+  selectedDashboardItem: string;
 };
-
+const dashboard = [
+  "Create Account",
+  "Add Beneficiary",
+  "Remove Beneficiary",
+  "Tranfer Money",
+  "View Startment",
+];
 class Dashboard extends Component<Props, State> {
   //enableDisable = useState<boolean>(false);
+  state = {
+    enableDisable: false,
+    dashboardList: dashboard,
+    selectedDashboardItem: dashboard[0],
+  };
   render() {
     return (
       <>
@@ -33,36 +46,57 @@ class Dashboard extends Component<Props, State> {
             <div className="col col-6" style={{ height: "73vh" }}>
               <Card height="100%">
                 <ul className="list-group">
-                  <li className="list-group-item active">Cras justo odio</li>
-                  <li className="list-group-item">Dapibus ac facilisis in</li>
-                  <li className="list-group-item">Morbi leo risus</li>
-                  <li className="list-group-item">Porta ac consectetur ac</li>
-                  <li className="list-group-item">Vestibulum at eros</li>
+                  {this.state.dashboardList.map((item) => {
+                    return (
+                      <li
+                        onClick={() => {
+                          this.setState((pre) => {
+                            return { ...pre, selectedDashboardItem: item };
+                          });
+                        }}
+                        style={{ cursor: "pointer" }}
+                        className={`list-group-item ${
+                          this.state.selectedDashboardItem === item
+                            ? "active"
+                            : ""
+                        }`}
+                      >
+                        {item}
+                      </li>
+                    );
+                  })}
                 </ul>
               </Card>
             </div>
             <div className="col col-6">
               <div className="col col-12" style={{ height: "36vh" }}>
                 <Card>
-                  <div className="row centerAlignText">
+                  <div className="row">
                     <div className="col col-12">
                       Account Number: <b>SB</b>
                     </div>
                     <div className="col col-12">
                       Account Balance: <b>3234</b>
                     </div>
-                    <div className="col col-6">
-                      <button type="button">View More</button>
-                    </div>
+                    <br /> <br />
                     <div className="col col-6">
                       <Switch
                         id="chkSwitch"
-                        isChecked={true}
+                        isChecked={this.state.enableDisable}
                         label="Enable/Disable"
                         onChange={(e) => {
+                          this.setState((pre) => {
+                            return {
+                              ...pre,
+                              enableDisable: e,
+                            };
+                          });
                           console.log("onchange ", e);
                         }}
                       />
+                    </div>
+                    <div className="col col-6" style={{ textAlign: "end" }}>
+                      <button type="button">View More</button>
                     </div>
                   </div>
                 </Card>

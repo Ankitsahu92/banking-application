@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 //import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 //import img from "../../../assets/images/bank-svgrepo-com.svg";
@@ -29,7 +30,7 @@ class Header extends Component<Props, State> {
               <a href="void javascript(0)">Staff Corner</a>
             </li>
             <li className={styles.navLi}>
-              <a href="void javascript(0)">Profile</a>
+              <Link to="/Profile">Profile</Link>
             </li>
             <li className={styles.navLi}>
               <a href="void javascript(0)">Logout</a>
