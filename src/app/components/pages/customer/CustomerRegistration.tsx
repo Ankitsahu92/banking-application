@@ -20,10 +20,10 @@ class CustomerRegistration extends Component<Props, State> {
             <input placeholder="Full Name" />
           </div>
           <div className="col col-8">
-            <input placeholder="Password" />
+            <input placeholder="Password" type="Password" />
           </div>
           <div className="col col-8">
-            <input placeholder="Confirm Password" />
+            <input placeholder="Confirm Password" type="Password" />
           </div>
           <button type="submit">Register</button>
           <br />
