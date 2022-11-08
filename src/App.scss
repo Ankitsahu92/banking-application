@@ -1,5 +1,11 @@
 @import "~bootstrap/scss/bootstrap.scss";
 
+::-webkit-input-placeholder,
+::-moz-placeholder,
+:-ms-input-placeholder {
+  font-weight: bold;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -58,4 +64,19 @@ input {
   border-radius: 15px 5px 5px 5px;
   border-color: var(--project-primary-color);
   box-shadow: inset 5px 4px 7px 0px var(--project-primary-color);
+  margin: 5px 0;
+}
+
+.customerRegistration {
+  width: 80%;
+  margin: auto;
+  height: 100%;
+}
+
+.centerAlignItems {
+  align-items: center;
+}
+
+.centerAlignText {
+  text-align: center;
 }
