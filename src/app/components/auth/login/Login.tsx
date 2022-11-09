@@ -72,10 +72,10 @@ const Login = (props: Props) => {
                     </div>
 
                     <div className="row">
-                      <div className="col col-6">
+                      <div className="col col-8">
                         <Link to="/ForgotPassword">Forgot Password</Link>
                       </div>
-                      <div className="col col-6" style={{ textAlign: "end" }}>
+                      <div className="col col-4" style={{ textAlign: "end" }}>
                         <button type="submit">Submit</button>
                       </div>
                     </div>
