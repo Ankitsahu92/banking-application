@@ -1,15 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
+import MyTable from "../../common/MyTable";
 
 type Props = {};
 
-type State = {};
-
-class Profile extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>Profile</div>;
-  }
-}
+const Profile = (props: Props) => {
+  return (
+    <div>
+      <MyTable />
+    </div>
+  );
+};
 
 export default Profile;

@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { ChangeEvent, Component } from "react";
 import { Link } from "react-router-dom";
+import { AppConstant } from "../../modal/AppConstant";
 //import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 //import img from "../../../assets/images/bank-svgrepo-com.svg";
@@ -9,8 +10,25 @@ type State = {};
 
 class Header extends Component<Props, State> {
   state = {};
+  userType: string | null = localStorage.getItem("UserType"); // AppConstant.UserType.Customer;
+
+  isCustomer = this.userType === AppConstant.UserType.Customer;
+  isStaff = this.userType === AppConstant.UserType.Staff;
+  isAdminUser = this.userType === AppConstant.UserType.AdminUser;
+
+  isAuthenticated: boolean =
+    this.isCustomer || this.isStaff || this.isAdminUser;
+
+  onLogoutClick = (e: any) => {
+    e.preventDefault();
+    console.log("onLogoutClick");
+
+    localStorage.removeItem("UserType");
+    return false;
+  };
+
   //navigate = useNavigate();
-  render() {
+  render(): JSX.Element {
     return (
       <header>
         <nav>
@@ -26,25 +44,25 @@ class Header extends Component<Props, State> {
           </div>
           {/* nav List */}
           <ul className={styles.navList}>
-            <li className={styles.navLi}>
-              <a href="void javascript(0)">Staff Corner</a>
-            </li>
-            <li className={styles.navLi}>
-              <Link to="/Profile">Profile</Link>
-            </li>
-            <li className={styles.navLi}>
-              <a href="void javascript(0)">Logout</a>
-            </li>
-            <li className={styles.navLi}>
-              <a href="void javascript(0)">Welcom User Name</a>
-            </li>
+            {this.isAuthenticated && (
+              <>
+                {this.isStaff && <li className={styles.navLi}>Staff Corner</li>}
+                <li className={styles.navLi}>
+                  <Link to="/Profile">Profile</Link>
+                </li>
+                <li className={styles.navLi} onClick={this.onLogoutClick}>
+                  Logout
+                </li>
+                <li className={styles.navLi}>Welcom User Name</li>
+              </>
+            )}
           </ul>
           {/* nav Button */}
-          <div className={styles.navBtn}>
+          {/* <div className={styles.navBtn}>
             <div className={styles.line1} />
             <div className={styles.line2} />
             <div className={styles.line3} />
-          </div>
+          </div> */}
         </nav>
       </header>
     );

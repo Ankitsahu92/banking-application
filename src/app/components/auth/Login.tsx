@@ -3,6 +3,7 @@ import styles from "./Login.module.scss";
 import bankImg from "../../../assets/images/bank.webp";
 import { Link } from "react-router-dom";
 import { ILogin } from "../../modal/ILogin";
+import { AppConstant } from "../../modal/AppConstant";
 type Props = {};
 class Login extends Component<Props, ILogin> {
   constructor(props: Props) {
@@ -13,6 +14,8 @@ class Login extends Component<Props, ILogin> {
   onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("onSubmit", e, this.state);
+
+    localStorage.setItem("UserType", AppConstant.UserType.Customer);
   };
 
   onChange = (e: ChangeEvent<HTMLInputElement>) => {
