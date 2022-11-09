@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class CreateStaff extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>CreateStaff</div>;
-  }
-}
+const CreateStaff = (props: Props) => {
+  return <div>CreateStaff</div>;
+};
 
 export default CreateStaff;

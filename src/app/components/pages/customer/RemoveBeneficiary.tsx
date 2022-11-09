@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class RemoveBeneficiary extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>RemoveBeneficiary</div>;
-  }
-}
+const RemoveBeneficiary = (props: Props) => {
+  return <div>RemoveBeneficiary</div>;
+};
 
 export default RemoveBeneficiary;

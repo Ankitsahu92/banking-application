@@ -1,10 +1,10 @@
 import React, { ChangeEvent, useState } from "react";
 import styles from "./Login.module.scss";
-import bankImg from "../../../assets/images/bank.webp";
+import bankImg from "../../../../assets/images/bank.webp";
 
 import { Link } from "react-router-dom";
-import { AppConstant } from "../../modal/AppConstant";
-import { ILogin } from "../../modal/ILogin";
+import { AppConstant } from "../../../modal/AppConstant";
+import { ILogin } from "../../../modal/ILogin";
 
 type Props = {};
 

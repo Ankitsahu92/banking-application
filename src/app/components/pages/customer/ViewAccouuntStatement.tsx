@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class ViewAccouuntStatement extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>ViewAccouuntStatement</div>;
-  }
-}
+const ViewAccouuntStatement = (props: Props) => {
+  return <div>ViewAccouuntStatement</div>;
+};
 
 export default ViewAccouuntStatement;

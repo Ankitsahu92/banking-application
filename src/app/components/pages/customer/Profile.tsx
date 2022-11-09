@@ -4,11 +4,7 @@ import MyTable from "../../common/MyTable";
 type Props = {};
 
 const Profile = (props: Props) => {
-  return (
-    <div>
-      <MyTable />
-    </div>
-  );
+  return <MyTable />;
 };
 
 export default Profile;

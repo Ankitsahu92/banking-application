@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class AddBeneficiary extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>AddBeneficiary</div>;
-  }
-}
+const AddBeneficiary = (props: Props) => {
+  return <div>AddBeneficiary</div>;
+};
 
 export default AddBeneficiary;

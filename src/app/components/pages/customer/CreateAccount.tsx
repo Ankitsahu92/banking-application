@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class CreateAccount extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <div>CreateAccount</div>;
-  }
-}
+const CreateAccount = (props: Props) => {
+  return <div>CreateAccount</div>;
+};
 
 export default CreateAccount;

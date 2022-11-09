@@ -1,15 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 
 type Props = {};
 
-type State = {};
-
-class Layout extends Component<Props, State> {
-  state = {};
-
-  render() {
-    return <>Layout</>;
-  }
-}
+const Layout = (props: Props) => {
+  return <div>Layout</div>;
+};
 
 export default Layout;
