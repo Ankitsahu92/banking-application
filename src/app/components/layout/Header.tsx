@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppConstant } from "../../modal/AppConstant";
 //import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
@@ -13,11 +13,13 @@ const Header = (props: Props) => {
   const isAdminUser = userType === AppConstant.UserType.AdminUser;
   const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
   const userName = localStorage.getItem(AppConstant.UserName);
+
+  const navigate = useNavigate();
   const onLogoutClick = (e: any) => {
     e.preventDefault();
     console.log("onLogoutClick");
     localStorage.removeItem("UserType");
-    return false;
+    navigate("/login");
   };
 
   return (
