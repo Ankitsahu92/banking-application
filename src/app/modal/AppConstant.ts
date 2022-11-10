@@ -3,5 +3,6 @@ export class AppConstant {
         Customer: "customer",
         Staff: "staff",
         AdminUser: "admin-user",
-    }
+    };
+    public static UserName = "user-name";
 }

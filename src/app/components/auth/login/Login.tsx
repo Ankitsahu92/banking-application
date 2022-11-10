@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import styles from "./Login.module.scss";
 import bankImg from "../../../../assets/images/bank.webp";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AppConstant } from "../../../modal/AppConstant";
 import { ILogin } from "../../../modal/ILogin";
 
@@ -14,11 +14,16 @@ const Login = (props: Props) => {
     UserName: "",
   });
 
+  const navigate = useNavigate();
+
   const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("onSubmit", e, formData);
-
     localStorage.setItem("UserType", AppConstant.UserType.Customer);
+    localStorage.setItem(AppConstant.UserName, formData.UserName);
+    setTimeout(() => {
+      navigate("/Dashboard");
+    }, 100);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -12,7 +12,7 @@ const Header = (props: Props) => {
   const isStaff = userType === AppConstant.UserType.Staff;
   const isAdminUser = userType === AppConstant.UserType.AdminUser;
   const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
-
+  const userName = localStorage.getItem(AppConstant.UserName);
   const onLogoutClick = (e: any) => {
     e.preventDefault();
     console.log("onLogoutClick");
@@ -44,7 +44,7 @@ const Header = (props: Props) => {
               <li className={styles.navLi} onClick={onLogoutClick}>
                 Logout
               </li>
-              <li className={styles.navLi}>Welcom User Name</li>
+              <li className={styles.navLi}>Welcom {userName}</li>
             </>
           )}
         </ul>

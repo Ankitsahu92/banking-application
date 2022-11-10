@@ -1,5 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
+import { AppConstant } from "../../modal/AppConstant";
 import ForgotPassword from "../auth/ForgotPassword";
 import Login from "../auth/login/Login";
 import UpdatePassword from "../auth/UpdatePassword";
@@ -21,7 +22,11 @@ import EnableDisableStaff from "../pages/staff/EnableDisableStaff";
 type Props = {};
 
 const RootRouter = (props: Props) => {
-  const loggedIn: boolean = false;
+  const userType: string | null = localStorage.getItem("UserType"); // AppConstant.UserType.Customer;
+  const isCustomer = userType === AppConstant.UserType.Customer;
+  const isStaff = userType === AppConstant.UserType.Staff;
+  const isAdminUser = userType === AppConstant.UserType.AdminUser;
+  const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
   return (
     <Routes>
       <Route path="/login" element={<Login />}></Route>
@@ -64,9 +69,12 @@ const RootRouter = (props: Props) => {
         path="/ApproveModifyBeneficiary"
         element={<ApproveModifyBeneficiary />}
       ></Route>
+      <Route path="/Dashboard" element={<Dashboard />}></Route>
       <Route
         path="/"
-        element={loggedIn ? <Dashboard /> : <Navigate replace to="/login" />}
+        element={
+          isAuthenticated ? <Dashboard /> : <Navigate replace to="/login" />
+        }
       ></Route>
     </Routes>
   );
