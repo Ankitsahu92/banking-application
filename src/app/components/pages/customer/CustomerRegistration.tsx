@@ -1,11 +1,14 @@
-import React, { ChangeEvent, useState } from "react";
-import { Link } from "react-router-dom";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+import { Link, Navigate } from "react-router-dom";
 import { ICustomerRegistration } from "../../../modal/ICustomerRegistration";
 import Card from "../../common/Card";
+import { connect } from "react-redux";
+import { SignupParams } from "../../../global.types";
+import { AuthState } from "../../../redux/reducers/auth";
+import { AppState } from "../../../redux/store";
+import { signup } from "../../../redux/actions/authAction";
 
-type Props = {};
-
-const CustomerRegistration = (props: Props) => {
+const CustomerRegistration = ({ signup, auth }: SignupProps) => {
   const [formData, setFormData] = useState<ICustomerRegistration>({
     UserName: "",
     FullName: "",
@@ -13,9 +16,20 @@ const CustomerRegistration = (props: Props) => {
     ConfirmPassword: "",
   });
 
-  const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("onSubmit", e, formData);
+    console.log("inside the form");
+    if (formData.Password !== formData.ConfirmPassword) {
+      console.log("inside the if condition");
+      // raise the alert
+    } else {
+      console.log("inside the else condition");
+      signup({
+        name: formData.FullName,
+        password: formData.Password,
+        email: formData.UserName,
+      });
+    }
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +37,12 @@ const CustomerRegistration = (props: Props) => {
       return { ...prev, [e.target.name]: e.target.value };
     });
   };
+
+  if (auth.isAuthenticated) {
+    //redirect("/dashboard");
+    return <Navigate to={"/dashboard"}></Navigate>;
+    // it should navigate us to dashboard page.
+  }
 
   return (
     <div className="customerRegistration">
@@ -78,4 +98,26 @@ const CustomerRegistration = (props: Props) => {
   );
 };
 
-export default CustomerRegistration;
+CustomerRegistration.propTypes = {};
+
+const mapStateToProps = (state: AppState) => ({ auth: state.auth });
+
+const mapDispatchToProps = { signup };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(CustomerRegistration);
+
+interface SignupProps {
+  // setAlert : typeof SetAlert
+  signup: (signupParams: SignupParams) => void;
+  auth: AuthState;
+}
+
+// interface FormData {
+//   name: string;
+//   email: string;
+//   password: string;
+//   password2: string;
+// }
