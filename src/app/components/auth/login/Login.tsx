@@ -52,7 +52,12 @@ const Login = (props: Props) => {
   return (
     <div className={styles.flexRow}>
       <div className={styles.flexColumn}>
-        <img alt="Bank Image" src={bankImg} className={styles.img} />
+        <input
+          type="Image"
+          alt="Bank Image"
+          src={bankImg}
+          className={styles.img}
+        />
       </div>
       <div className={styles.flexColumn}>
         <div className={styles.flexContainer}>
