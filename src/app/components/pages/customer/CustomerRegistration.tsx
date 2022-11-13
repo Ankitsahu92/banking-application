@@ -7,6 +7,7 @@ import { SignupParams } from "../../../global.types";
 import { AuthState } from "../../../redux/reducers/auth";
 import { AppState } from "../../../redux/store";
 import { signup } from "../../../redux/actions/authAction";
+import { AppConstant } from "../../../modal/AppConstant";
 
 const CustomerRegistration = ({ signup, auth }: SignupProps) => {
   const [formData, setFormData] = useState<ICustomerRegistration>({
@@ -27,7 +28,8 @@ const CustomerRegistration = ({ signup, auth }: SignupProps) => {
       signup({
         name: formData.FullName,
         password: formData.Password,
-        email: formData.UserName,
+        userName: formData.UserName,
+        userType: AppConstant.UserTypeObj.Customer,
       });
     }
   };
@@ -40,7 +42,7 @@ const CustomerRegistration = ({ signup, auth }: SignupProps) => {
 
   if (auth.isAuthenticated) {
     //redirect("/dashboard");
-    return <Navigate to={"/dashboard"}></Navigate>;
+    return <Navigate to={"/login"}></Navigate>;
     // it should navigate us to dashboard page.
   }
 

@@ -4,11 +4,11 @@ import { SignupParams } from "../../global.types";
 import { SetAlertType, SignupFailType, SignupSuccessType } from "../types";
 
 export const signup =
-  ({ name, email, password }: SignupParams) =>
+  ({ name, userName, password, userType }: SignupParams) =>
     async (
       dispatch: Dispatch<SignupSuccessType | SignupFailType | SetAlertType>
     ) => {
-      const data = { name, email, password };
+      const data = { name, userName, password, userType };
 
       try {
         const response = await api.post<{ token: string }>("/users", data);

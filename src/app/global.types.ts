@@ -25,12 +25,13 @@ export interface ClientErrorType {
 }
 
 export interface LoginParamsType {
-    email: string;
+    userName: string;
     password: string;
 }
 
 export interface SignupParams extends LoginParamsType {
     name: string;
+    userType: string;
 }
 
 export interface EducationType {

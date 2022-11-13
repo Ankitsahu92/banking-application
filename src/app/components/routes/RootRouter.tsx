@@ -23,9 +23,9 @@ type Props = {};
 
 const RootRouter = (props: Props) => {
   const userType: string | null = localStorage.getItem("UserType"); // AppConstant.UserType.Customer;
-  const isCustomer = userType === AppConstant.UserType.Customer;
-  const isStaff = userType === AppConstant.UserType.Staff;
-  const isAdminUser = userType === AppConstant.UserType.AdminUser;
+  const isCustomer = userType === AppConstant.UserTypeObj.Customer;
+  const isStaff = userType === AppConstant.UserTypeObj.Staff;
+  const isAdminUser = userType === AppConstant.UserTypeObj.AdminUser;
   const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
   return (
     <Routes>

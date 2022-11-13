@@ -7,18 +7,17 @@ import styles from "./Header.module.scss";
 type Props = {};
 
 const Header = (props: Props) => {
-  const userType: string | null = localStorage.getItem("UserType"); // AppConstant.UserType.Customer;
-  const isCustomer = userType === AppConstant.UserType.Customer;
-  const isStaff = userType === AppConstant.UserType.Staff;
-  const isAdminUser = userType === AppConstant.UserType.AdminUser;
+  const userType: string | null = localStorage.getItem(AppConstant.UserType); // AppConstant.UserType.Customer;
+  const isCustomer = userType === AppConstant.UserTypeObj.Customer;
+  const isStaff = userType === AppConstant.UserTypeObj.Staff;
+  const isAdminUser = userType === AppConstant.UserTypeObj.AdminUser;
   const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
   const userName = localStorage.getItem(AppConstant.UserName);
 
   const navigate = useNavigate();
   const onLogoutClick = (e: any) => {
     e.preventDefault();
-    console.log("onLogoutClick");
-    localStorage.removeItem("UserType");
+    localStorage.clear();
     navigate("/login");
   };
 
@@ -46,7 +45,7 @@ const Header = (props: Props) => {
               <li className={styles.navLi} onClick={onLogoutClick}>
                 Logout
               </li>
-              <li className={styles.navLi}>Welcom {userName}</li>
+              <li className={styles.navLi}>Welcom ({userName})</li>
             </>
           )}
         </ul>

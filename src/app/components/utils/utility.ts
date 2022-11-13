@@ -7,10 +7,10 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((req: any) => {
-    const token: string | null = localStorage.getItem("token");
-    if (token) {
-        req.headers.common["x-auth-token"] = token;
-    }
+    // const token: string | null = localStorage.getItem("token");
+    // if (token) {
+    //     req.headers.common["x-auth-token"] = token;
+    // }
     return req;
 });
 export default api;

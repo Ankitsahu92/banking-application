@@ -1,29 +1,46 @@
 import React, { ChangeEvent, useState } from "react";
 import styles from "./Login.module.scss";
 import bankImg from "../../../../assets/images/bank.webp";
-
+import jwt from "jwt-decode"; // import dependency
 import { Link, useNavigate } from "react-router-dom";
-import { AppConstant } from "../../../modal/AppConstant";
 import { ILogin } from "../../../modal/ILogin";
+import api from "../../utils/utility";
+import { Constant } from "../../utils/constant";
+import { AppConstant } from "../../../modal/AppConstant";
 
 type Props = {};
 
 const Login = (props: Props) => {
   const [formData, setFormData] = useState<ILogin>({
-    Password: "",
-    UserName: "",
+    password: "",
+    userName: "",
   });
 
   const navigate = useNavigate();
 
-  const onSubmit = (e: ChangeEvent<HTMLFormElement>) => {
+  const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("onSubmit", e, formData);
-    localStorage.setItem("UserType", AppConstant.UserType.Customer);
-    localStorage.setItem(AppConstant.UserName, formData.UserName);
-    setTimeout(() => {
-      navigate("/Dashboard");
-    }, 100);
+    // localStorage.setItem("UserType", AppConstant.UserType.Customer);
+    // localStorage.setItem(AppConstant.UserName, formData.UserName);
+    try {
+      const resp = await api.post("/auth", {
+        ...formData,
+        // userName: "sahu@gmail.com",
+        // password: "sahu@gmail.com1",
+      });
+      const token = resp.data.data.token;
+      localStorage.setItem(Constant.Token, token);
+      const decodeToken: any = jwt(token);
+      console.log(decodeToken.user.name, "user");
+      //localStorage.setItem("UserType", AppConstant.UserType.Customer);
+      localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
+      localStorage.setItem(AppConstant.UserName, decodeToken.user.name);
+      localStorage.setItem(AppConstant.ID, decodeToken.user.id);
+      return navigate("/dashboard");
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -52,7 +69,7 @@ const Login = (props: Props) => {
                       <input
                         required
                         onChange={onChange}
-                        name="UserName"
+                        name="userName"
                         type="text"
                         className="form-control"
                         id="UserName"
@@ -71,7 +88,7 @@ const Login = (props: Props) => {
                         type="password"
                         className="form-control"
                         id="Password"
-                        name="Password"
+                        name="password"
                         placeholder="Enter Password"
                       />
                     </div>
