@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppConstant } from "../../modal/AppConstant";
+import { AppConstant } from "../utils/AppConstant";
 //import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
 

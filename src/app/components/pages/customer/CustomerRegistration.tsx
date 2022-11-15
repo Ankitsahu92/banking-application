@@ -7,7 +7,7 @@ import { SignupParams } from "../../../global.types";
 import { AuthState } from "../../../redux/reducers/auth";
 import { AppState } from "../../../redux/store";
 import { signup } from "../../../redux/actions/authAction";
-import { AppConstant } from "../../../modal/AppConstant";
+import { AppConstant } from "../../utils/AppConstant";
 
 const CustomerRegistration = ({ signup, auth }: SignupProps) => {
   const [formData, setFormData] = useState<ICustomerRegistration>({

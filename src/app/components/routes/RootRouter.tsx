@@ -1,6 +1,6 @@
 import React from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
-import { AppConstant } from "../../modal/AppConstant";
+import { AppConstant } from "../utils/AppConstant";
 import ForgotPassword from "../auth/ForgotPassword";
 import Login from "../auth/login/Login";
 import UpdatePassword from "../auth/UpdatePassword";

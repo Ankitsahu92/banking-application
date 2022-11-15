@@ -5,8 +5,7 @@ import jwt from "jwt-decode"; // import dependency
 import { Link, useNavigate } from "react-router-dom";
 import { ILogin } from "../../../modal/ILogin";
 import api from "../../utils/utility";
-import { Constant } from "../../utils/constant";
-import { AppConstant } from "../../../modal/AppConstant";
+import { AppConstant } from "../../utils/AppConstant";
 
 type Props = {};
 
@@ -30,7 +29,7 @@ const Login = (props: Props) => {
         // password: "sahu@gmail.com1",
       });
       const token = resp.data.data.token;
-      localStorage.setItem(Constant.Token, token);
+      localStorage.setItem(AppConstant.Token, token);
       const decodeToken: any = jwt(token);
       console.log(decodeToken.user.name, "user");
       //localStorage.setItem("UserType", AppConstant.UserType.Customer);
