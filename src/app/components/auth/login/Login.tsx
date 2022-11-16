@@ -1,16 +1,15 @@
 import React, { ChangeEvent, useState } from "react";
 import styles from "./Login.module.scss";
 import bankImg from "../../../../assets/images/bank.webp";
-import jwt from "jwt-decode"; // import dependency
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavigateFunction, useNavigate } from "react-router-dom";
 import { ILogin } from "../../../modal/ILogin";
-import api from "../../utils/utility";
-import { Constant } from "../../utils/constant";
-import { AppConstant } from "../../../modal/AppConstant";
+import { connect } from "react-redux";
+import { AuthState } from "../../../redux/reducers/auth";
+import { LoginParamsType } from "../../../global.types";
+import { AppState } from "../../../redux/store";
+import { signIn } from "../../../redux/actions/authAction";
 
-type Props = {};
-
-const Login = (props: Props) => {
+const Login = ({ signIn, auth }: LoginProps) => {
   const [formData, setFormData] = useState<ILogin>({
     password: "",
     userName: "",
@@ -21,26 +20,33 @@ const Login = (props: Props) => {
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log("onSubmit", e, formData);
-    // localStorage.setItem("UserType", AppConstant.UserType.Customer);
-    // localStorage.setItem(AppConstant.UserName, formData.UserName);
-    try {
-      const resp = await api.post("/auth", {
-        ...formData,
-        // userName: "sahu@gmail.com",
-        // password: "sahu@gmail.com1",
-      });
-      const token = resp.data.data.token;
-      localStorage.setItem(Constant.Token, token);
-      const decodeToken: any = jwt(token);
-      console.log(decodeToken.user.name, "user");
-      //localStorage.setItem("UserType", AppConstant.UserType.Customer);
-      localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
-      localStorage.setItem(AppConstant.UserName, decodeToken.user.name);
-      localStorage.setItem(AppConstant.ID, decodeToken.user.id);
-      return navigate("/dashboard");
-    } catch (e) {
-      console.error(e);
+    if (!formData.password || !formData.userName) {
+      alert("please enter username and password");
+    } else {
+      signIn(
+        {
+          userName: formData.userName,
+          password: formData.password,
+        },
+        navigate
+      );
     }
+    // try {
+    //   const resp = await api.post("/auth", {
+    //     ...formData,
+    //   });
+    //   const token = resp.data.data.token;
+    //   localStorage.setItem(AppConstant.Token, token);
+    //   const decodeToken: any = jwt(token);
+    //   console.log(decodeToken.user.name, "user");
+    //   //localStorage.setItem("UserType", AppConstant.UserType.Customer);
+    //   localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
+    //   localStorage.setItem(AppConstant.UserName, decodeToken.user.name);
+    //   localStorage.setItem(AppConstant.ID, decodeToken.user.id);
+    //   return navigate("/dashboard");
+    // } catch (e) {
+    //   console.error(e);
+    // }
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -49,10 +55,19 @@ const Login = (props: Props) => {
     });
   };
 
+  if (auth.isAuthenticated) {
+    navigate("/dashboard");
+  }
+
   return (
     <div className={styles.flexRow}>
       <div className={styles.flexColumn}>
-        <img alt="Bank Image" src={bankImg} className={styles.img} />
+        <input
+          type="Image"
+          alt="Bank Image"
+          src={bankImg}
+          className={styles.img}
+        />
       </div>
       <div className={styles.flexColumn}>
         <div className={styles.flexContainer}>
@@ -77,8 +92,8 @@ const Login = (props: Props) => {
                         placeholder="Enter User Name"
                       />
                       {/* <small id="UserNameHelp" className="form-text text-muted">
-                We'll never share your user name with anyone else.
-              </small> */}
+              We'll never share your user name with anyone else.
+            </small> */}
                     </div>
                     <div className="form-group">
                       <label htmlFor="Password">Password</label>
@@ -117,4 +132,16 @@ const Login = (props: Props) => {
   );
 };
 
-export default Login;
+Login.propTypes = {};
+
+const mapStateToProps = (state: AppState) => ({ auth: state.auth });
+
+const mapDispatchToProps = { signIn };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Login);
+
+interface LoginProps {
+  // setAlert : typeof SetAlert
+  signIn: (signInParams: LoginParamsType, navigate: NavigateFunction) => void;
+  auth: AuthState;
+}

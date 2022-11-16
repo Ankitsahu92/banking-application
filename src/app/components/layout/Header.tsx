@@ -1,24 +1,29 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { AppConstant } from "../../modal/AppConstant";
+import { AppConstant } from "../utils/AppConstant";
 //import { useNavigate } from "react-router-dom";
 import styles from "./Header.module.scss";
+import { connect } from "react-redux";
+import { AppState } from "../../redux/store";
+import { AuthState } from "../../redux/reducers/auth";
+import jwt from "jwt-decode";
 
-type Props = {};
-
-const Header = (props: Props) => {
-  const userType: string | null = localStorage.getItem(AppConstant.UserType); // AppConstant.UserType.Customer;
-  const isCustomer = userType === AppConstant.UserTypeObj.Customer;
-  const isStaff = userType === AppConstant.UserTypeObj.Staff;
-  const isAdminUser = userType === AppConstant.UserTypeObj.AdminUser;
-  const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
-  const userName = localStorage.getItem(AppConstant.UserName);
+export const Header = ({ auth }: HeaderProps) => {
+  let userType: string | null = localStorage.getItem(AppConstant.UserType); // AppConstant.UserType.Customer;
+  let isCustomer: boolean =
+    userType === localStorage.getItem(AppConstant.UserTypeObj.Customer);
+  let isStaff: boolean =
+    userType === localStorage.getItem(AppConstant.UserTypeObj.Staff);
+  let isAdminUser: boolean =
+    userType === localStorage.getItem(AppConstant.UserTypeObj.AdminUser);
+  // const isAuthenticated: boolean = isCustomer || isStaff || isAdminUser;
+  let userName: string | null = localStorage.getItem(AppConstant.UserName);
 
   const navigate = useNavigate();
   const onLogoutClick = (e: any) => {
     e.preventDefault();
     localStorage.clear();
-    navigate("/login");
+    window.location.href = "/login";
   };
 
   return (
@@ -28,7 +33,7 @@ const Header = (props: Props) => {
         <div
           className={styles.logo}
           onClick={() => {
-            // navigate("/");
+            navigate("/dashboard");
           }}
         >
           {/* <img src={img} className="imgBackIcon" alt="img Back Icon"></img> */}
@@ -36,7 +41,7 @@ const Header = (props: Props) => {
         </div>
         {/* nav List */}
         <ul className={styles.navList}>
-          {isAuthenticated && (
+          {auth.isAuthenticated && (
             <>
               {isStaff && <li className={styles.navLi}>Staff Corner</li>}
               <li className={styles.navLi}>
@@ -51,13 +56,24 @@ const Header = (props: Props) => {
         </ul>
         {/* nav Button */}
         {/* <div className={styles.navBtn}>
-        <div className={styles.line1} />
-        <div className={styles.line2} />
-        <div className={styles.line3} />
-      </div> */}
+      <div className={styles.line1} />
+      <div className={styles.line2} />
+      <div className={styles.line3} />
+    </div> */}
       </nav>
     </header>
   );
 };
 
-export default Header;
+Header.propTypes = {};
+
+const mapStateToProps = (state: AppState) => ({ auth: state.auth });
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
+
+interface HeaderProps {
+  // setAlert : typeof SetAlert
+  auth: AuthState;
+}

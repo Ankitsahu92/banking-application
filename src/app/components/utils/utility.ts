@@ -1,4 +1,5 @@
 import axios from "axios";
+import { AppConstant } from "./AppConstant";
 
 // create an instance of axios
 const api = axios.create({
@@ -7,10 +8,10 @@ const api = axios.create({
 });
 
 api.interceptors.request.use((req: any) => {
-    // const token: string | null = localStorage.getItem("token");
-    // if (token) {
-    //     req.headers.common["x-auth-token"] = token;
-    // }
+    const token: string | null = localStorage.getItem(AppConstant.Token);
+    if (token) {
+        req.headers.Authorization = `Bearer ${token}`;
+    }
     return req;
 });
 export default api;

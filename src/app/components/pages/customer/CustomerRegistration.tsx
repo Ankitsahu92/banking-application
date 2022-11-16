@@ -1,5 +1,10 @@
 import React, { ChangeEvent, FormEvent, useState } from "react";
-import { Link, Navigate } from "react-router-dom";
+import {
+  Link,
+  // Navigate,
+  useNavigate,
+  NavigateFunction,
+} from "react-router-dom";
 import { ICustomerRegistration } from "../../../modal/ICustomerRegistration";
 import Card from "../../common/Card";
 import { connect } from "react-redux";
@@ -7,7 +12,7 @@ import { SignupParams } from "../../../global.types";
 import { AuthState } from "../../../redux/reducers/auth";
 import { AppState } from "../../../redux/store";
 import { signup } from "../../../redux/actions/authAction";
-import { AppConstant } from "../../../modal/AppConstant";
+import { AppConstant } from "../../utils/AppConstant";
 
 const CustomerRegistration = ({ signup, auth }: SignupProps) => {
   const [formData, setFormData] = useState<ICustomerRegistration>({
@@ -16,21 +21,21 @@ const CustomerRegistration = ({ signup, auth }: SignupProps) => {
     Password: "",
     ConfirmPassword: "",
   });
-
+  const navigate = useNavigate();
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    console.log("inside the form");
     if (formData.Password !== formData.ConfirmPassword) {
-      console.log("inside the if condition");
-      // raise the alert
+      alert("Password and confirm password should be same");
     } else {
-      console.log("inside the else condition");
-      signup({
-        name: formData.FullName,
-        password: formData.Password,
-        userName: formData.UserName,
-        userType: AppConstant.UserTypeObj.Customer,
-      });
+      signup(
+        {
+          name: formData.FullName,
+          password: formData.Password,
+          userName: formData.UserName,
+          userType: AppConstant.UserTypeObj.Customer,
+        },
+        navigate
+      );
     }
   };
 
@@ -40,11 +45,11 @@ const CustomerRegistration = ({ signup, auth }: SignupProps) => {
     });
   };
 
-  if (auth.isAuthenticated) {
-    //redirect("/dashboard");
-    return <Navigate to={"/login"}></Navigate>;
-    // it should navigate us to dashboard page.
-  }
+  // if (auth.isAuthenticated) {
+  //   //redirect("/dashboard");
+  //   return <Navigate to={"/login"}></Navigate>;
+  //   // it should navigate us to dashboard page.
+  // }
 
   return (
     <div className="customerRegistration">
@@ -113,7 +118,7 @@ export default connect(
 
 interface SignupProps {
   // setAlert : typeof SetAlert
-  signup: (signupParams: SignupParams) => void;
+  signup: (signupParams: SignupParams, navigate: NavigateFunction) => void;
   auth: AuthState;
 }
 

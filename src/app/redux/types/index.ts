@@ -2,7 +2,6 @@ import {
   AlertType,
   ClientErrorType,
   CommentType,
-  GithubRepoType,
   PostType,
   ProfileType,
   UserType,
@@ -84,10 +83,7 @@ export interface UpdateProfileFailedType {
 export interface DeleteAccountType {
   type: "DELETE_ACCOUT";
 }
-export interface GetGithubReposType {
-  type: "GET_GITHUB_REPOS";
-  payload: GithubRepoType[];
-}
+
 export interface GetPostsType {
   type: "GET_POSTS";
   payload: PostType[];
@@ -148,7 +144,6 @@ export type AppActionTypes =
   | UpdateProfileType
   | UpdateProfileFailedType
   | DeleteAccountType
-  | GetGithubReposType
   | GetPostsType
   | GetPostType
   | ClearPostType
