@@ -10,7 +10,7 @@ import ViewStatement from "./ViewStatement";
 import { connect } from "react-redux";
 import { AccountType } from "../../../../global.types";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { createOrUpdateAccount } from "../../../../redux/actions/accountAction";
+import { createOrUpdateAccount } from "../../../../redux/actions/dashboardAction";
 import { AppState } from "../../../../redux/store";
 
 const dashboard = [
@@ -113,9 +113,9 @@ export const Dashboard = ({
 Dashboard.propTypes = {};
 
 const mapStateToProps = (state: AppState) => ({
-  account: state.account.account || null,
-  accountList: state.account.accountList || [],
-  loading: state.account.loading || false,
+  account: state.dashboard.account || null,
+  accountList: state.dashboard.accountList || [],
+  loading: state.dashboard.loading || false,
 });
 
 const mapDispatchToProps = {
