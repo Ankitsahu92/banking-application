@@ -14,7 +14,6 @@ export const signup =
 
       try {
         const response = await api.post<any>("/users", data);
-        console.log(response, "users response");
         if (response.data.status === 200) {
           alert(response.data.msg);
           navigate("/login");
@@ -48,7 +47,6 @@ export const signIn =
 
       try {
         const response = await api.post<any>("/auth", data);
-        console.log(response, "auth response");
 
         if (response.data.status === 200) {
           dispatch({

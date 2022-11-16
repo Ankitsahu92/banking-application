@@ -10,11 +10,14 @@ import ViewStatement from "./ViewStatement";
 import { connect } from "react-redux";
 import { AccountType } from "../../../../global.types";
 import { NavigateFunction, useNavigate } from "react-router-dom";
-import { createOrUpdateAccount } from "../../../../redux/actions/dashboardAction";
+import {
+  createOrUpdateAccount,
+  getAllAccount,
+} from "../../../../redux/actions/dashboardAction";
 import { AppState } from "../../../../redux/store";
 
 const dashboard = [
-  "Create List",
+  "Account List",
   "Create Account",
   "Add Beneficiary",
   "Remove Beneficiary",
@@ -25,6 +28,7 @@ export const Dashboard = ({
   account,
   accountList,
   loading,
+  getAllAccount,
   createOrUpdateAccount,
 }: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
@@ -40,30 +44,38 @@ export const Dashboard = ({
           initialDeposit: 0,
           typeOfAccount: "",
           userID: "",
+          isEnabled: true,
         }
   );
   const navigate = useNavigate();
   const onSubmitClicked = () => {
-    console.log("onSubmitClicked", formData);
     createOrUpdateAccount(formData, navigate);
   };
 
+  // useEffect(() => {
+
+  //   setFormData(
+  //     account
+  //       ? account
+  //       : {
+  //           id: "",
+  //           accountNumber: "",
+  //           initialDeposit: 0,
+  //           typeOfAccount: "",
+  //           userID: "",
+  //         }
+  //   );
+  // }, [account]);
+
   useEffect(() => {
-    console.log("useEffect", account);
-
-    setFormData(
-      account
-        ? account
-        : {
-            id: "",
-            accountNumber: "",
-            initialDeposit: 0,
-            typeOfAccount: "",
-            userID: "",
-          }
-    );
-  }, [account]);
-
+    switch (selectedDashboardItem) {
+      case dashboard[0]:
+        getAllAccount();
+        break;
+      default:
+        break;
+    }
+  }, [selectedDashboardItem]);
   return (
     <>
       <Card>
@@ -90,8 +102,10 @@ export const Dashboard = ({
               </ul>
             </Card>
           </div>
-          <div className="col col-6">
-            {selectedDashboardItem === dashboard[0] && <AccountList />}
+          <div className="col col-6" style={{ overflow: "auto" }}>
+            {selectedDashboardItem === dashboard[0] && (
+              <AccountList accountList={accountList || []} />
+            )}
             {selectedDashboardItem === dashboard[1] && (
               <CreateAccount
                 formData={formData}
@@ -120,6 +134,7 @@ const mapStateToProps = (state: AppState) => ({
 
 const mapDispatchToProps = {
   createOrUpdateAccount,
+  getAllAccount,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
@@ -128,6 +143,7 @@ interface DashboardProps {
   account?: AccountType | null;
   accountList?: AccountType[];
   loading: boolean;
+  getAllAccount: () => void;
   createOrUpdateAccount: (
     data: AccountType,
     navigate: NavigateFunction

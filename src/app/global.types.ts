@@ -90,6 +90,7 @@ export interface PostType {
 
 export interface AccountType {
     id: string,
+    isEnabled: boolean,
     initialDeposit: number,
     accountNumber: string,
     typeOfAccount: string,

@@ -34,7 +34,6 @@ const authReducer = (
     case "SIGNUP_SUCCESS":
     case "LOGIN_SUCCESS":
       const token = action.payload.token;
-      console.log("inside the reducer auth");
       const decodeToken: any = jwt(token);
       if (decodeToken) {
         localStorage.setItem(AppConstant.Token, token);

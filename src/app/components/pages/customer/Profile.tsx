@@ -52,7 +52,6 @@ export const Profile = ({
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("onSubmit", e, formData);
     createOrUpdateProfile({ ...formData }, navigate);
   };
   const onlyNumberKey = (evt: any) => {

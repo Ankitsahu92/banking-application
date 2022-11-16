@@ -12,8 +12,7 @@ export const getAllAccount =
     () => async (dispatch: Dispatch<GetAllAccountType | UpdateAccountErrorType>) => {
         try {
             const userID = localStorage.getItem(AppConstant.ID)
-            const response = await api.get<any>(`/account/${userID}`);
-            console.log(response.data.data, "GetAllAccountType");
+            const response = await api.get<any>(`/account/userID/${userID}`);
             dispatch({
                 type: "GET_ALL_ACCOUNT",
                 payload: response.data.data,
@@ -33,9 +32,8 @@ export const getAllAccount =
 export const getAccountByID =
     () => async (dispatch: Dispatch<GetAccounByIdType | UpdateAccountErrorType>) => {
         try {
-            const id = localStorage.getItem(AppConstant.ID)
-            const response = await api.get<any>(`/account/${id}`);
-            console.log(response.data.data, "GET_ACCOUNT_BY_ID");
+            const userID = localStorage.getItem(AppConstant.ID)
+            const response = await api.get<any>(`/account/userID/${userID}`);
             dispatch({
                 type: "GET_ACCOUNT_BY_ID",
                 payload: response.data.data,
@@ -62,14 +60,10 @@ export const createOrUpdateAccount =
                 const accountNumber = moment().format("DDMMYYYYHHMMSS")
                 const id = localStorage.getItem(AppConstant.ID)
                 const APIObj = { ...data, userID: id, accountNumber };
-                console.log("APIObj", APIObj);
 
                 const response = await api.post<any>(`/account`, APIObj);
-                console.log(response, "createOrUpdateAccount");
 
                 // const { user, ...profileData } = result.data;
-                // console.log(JSON.stringify(profileData));
-                // console.log(JSON.stringify(api));
                 // dispatch({
                 //     type: "UPDATE_PROFILE",
                 //     payload: response.data.data,
@@ -85,7 +79,6 @@ export const createOrUpdateAccount =
                 }
                 //return true;
             } catch (error: any) {
-                console.log(JSON.stringify(error));
 
                 //alertError(error);
                 dispatch({

@@ -1,6 +1,6 @@
 import { AccountType, ClientErrorType } from "../../global.types";
 import { AppActionTypes } from "../types";
-const initialAccount = { accountNumber: "", id: "", initialDeposit: 0, typeOfAccount: "SB", userID: "" }
+const initialAccount = { accountNumber: "", id: "", initialDeposit: 0, typeOfAccount: "SB", userID: "", isEnabled: true } as AccountType
 const initialState: AccountState = {
     account: initialAccount,
     accountList: [],

@@ -11,7 +11,6 @@ const profileReducer = (
     state: ProfileState = initialState,
     action: AppActionTypes
 ): ProfileState => {
-    console.log("inside the reducer profile");
     switch (action.type) {
         case "GET_PROFILE":
         case "UPDATE_PROFILE":
