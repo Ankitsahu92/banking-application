@@ -3,6 +3,10 @@
 @import "primereact/resources/primereact.min.css"; //core css
 @import "primeicons/primeicons.css"; //icons
 
+.pi {
+  font-family: "primeicons" !important;
+}
+
 ::-webkit-input-placeholder,
 ::-moz-placeholder,
 :-ms-input-placeholder {

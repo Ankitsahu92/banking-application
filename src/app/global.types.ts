@@ -87,3 +87,12 @@ export interface PostType {
     comments: CommentType[];
     date: Date;
 }
+
+export interface AccountType {
+    id: string,
+    initialDeposit: number,
+    accountNumber: string,
+    typeOfAccount: string,
+    userID: string,
+}
+

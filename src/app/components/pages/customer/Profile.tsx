@@ -7,6 +7,7 @@ import {
   deleteAccount,
   getCurrentUserProfile,
 } from "../../../redux/actions/profileAction";
+
 import { AppState } from "../../../redux/store";
 import Card from "../../common/Card";
 

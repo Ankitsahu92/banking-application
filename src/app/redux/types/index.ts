@@ -1,4 +1,5 @@
 import {
+  AccountType,
   AlertType,
   ClientErrorType,
   CommentType,
@@ -123,7 +124,39 @@ export interface DeleteCommentType {
   payload: string; //commentId
 }
 
+//*********************AccountType ************ */
+export interface GetAllAccountType {
+  type: "GET_ALL_ACCOUNT";
+  payload: AccountType[];
+}
+
+export interface GetAccounByIdType {
+  type: "GET_ACCOUNT_BY_ID";
+  payload: AccountType;
+}
+
+export interface CreateAccountType {
+  type: "CREATE_ACCOUNT";
+  payload: AccountType;
+}
+
+export interface UpdateAccountType {
+  type: "UPDATE_ACCOUNT";
+  payload: AccountType;
+}
+
+export interface UpdateAccountErrorType {
+  type: "UPDATE_ACCOUNT_ERROR";
+}
+//*********************AccountType End ************ */
+
 export type AppActionTypes =
+  | GetAllAccountType
+  | GetAccounByIdType
+  | CreateAccountType
+  | UpdateAccountType
+  | UpdateAccountErrorType
+
   | SetAlertType
   | RemoveAlertType
   | clearAlertsType

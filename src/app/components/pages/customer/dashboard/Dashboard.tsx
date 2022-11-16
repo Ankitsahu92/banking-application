@@ -9,6 +9,12 @@ import RemoveBeneficiary from "./RemoveBeneficiary";
 import TransferMoney from "./TransferMoney";
 import ViewStatement from "./ViewStatement";
 
+import { connect } from "react-redux";
+import { AccountType } from "../../../../global.types";
+import { NavigateFunction } from "react-router-dom";
+import { createOrUpdateAccount } from "../../../../redux/actions/accountAction";
+import { AppState } from "../../../../redux/store";
+
 const dashboard = [
   "Create Account",
   "Add Beneficiary",
@@ -16,15 +22,16 @@ const dashboard = [
   "Tranfer Money",
   "View Startment",
 ];
-
-type Props = {};
-
-const Dashboard = (props: Props) => {
+export const Dashboard = ({
+  account,
+  accountList,
+  dashboardLoading,
+  createOrUpdateAccount,
+}: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
     string | null
   >(null);
   console.log(selectedDashboardItem, "selectedDashboardItem");
-
   return (
     <>
       {/* <Card>
@@ -79,4 +86,27 @@ const Dashboard = (props: Props) => {
   );
 };
 
-export default Dashboard;
+Dashboard.propTypes = {};
+
+const mapStateToProps = (state: AppState) => ({
+  account: state.account.account || null,
+  accountList: state.account.accountList || [],
+  dashboardLoading: state.profile.loading || false,
+});
+
+const mapDispatchToProps = {
+  createOrUpdateAccount,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+interface DashboardProps {
+  account?: AccountType | null;
+  accountList?: AccountType[];
+  loading: boolean;
+  createOrUpdateAccount: (
+    data: AccountType,
+    navigate: NavigateFunction
+  ) => void;
+  dashboardLoading: boolean;
+}
