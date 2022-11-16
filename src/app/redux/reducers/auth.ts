@@ -1,8 +1,10 @@
+import { AppConstant } from "../../components/utils/AppConstant";
 import { UserType } from "../../global.types";
 import { AppActionTypes } from "../types";
+import jwt from "jwt-decode";
 
 const initialState: AuthState = {
-  token: localStorage.getItem("token"),
+  token: localStorage.getItem(AppConstant.Token),
   isAuthenticated: false,
   user: null,
   loading: true,
@@ -33,7 +35,15 @@ const authReducer = (
     case "LOGIN_SUCCESS":
       const token = action.payload.token;
       console.log("inside the reducer auth");
-      localStorage.setItem("token", token);
+      const decodeToken: any = jwt(token);
+      if (decodeToken) {
+        localStorage.setItem(AppConstant.Token, token);
+        localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
+        localStorage.setItem(AppConstant.UserName, decodeToken.user.name);
+        localStorage.setItem(AppConstant.ID, decodeToken.user.id);
+      } else {
+        alert(AppConstant.CommonErrorMessages)
+      }
       return {
         ...state,
         token,
