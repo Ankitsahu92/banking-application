@@ -33,7 +33,7 @@ export const Header = ({ auth }: HeaderProps) => {
         <div
           className={styles.logo}
           onClick={() => {
-            // navigate("/");
+            navigate("/dashboard");
           }}
         >
           {/* <img src={img} className="imgBackIcon" alt="img Back Icon"></img> */}

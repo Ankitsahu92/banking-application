@@ -98,3 +98,9 @@ select {
 label {
   font-weight: bold;
 }
+
+*:disabled {
+  background-color: dimgrey;
+  color: linen;
+  opacity: 1;
+}
