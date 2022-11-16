@@ -7,7 +7,6 @@ import { AccountType } from "../../global.types";
 import { CreateAccountType, GetAccounByIdType, GetAllAccountType, ResetAccountType, SetAlertType, UpdateAccountErrorType, UpdateAccountType } from "../types";
 import moment from 'moment'
 
-
 export const getAllAccount =
     () => async (dispatch: Dispatch<GetAllAccountType | UpdateAccountErrorType>) => {
         try {
@@ -27,7 +26,6 @@ export const getAllAccount =
             } as UpdateAccountErrorType);
         }
     };
-
 
 export const getAccountByID =
     () => async (dispatch: Dispatch<GetAccounByIdType | UpdateAccountErrorType>) => {
@@ -57,12 +55,15 @@ export const createOrUpdateAccount =
             >
         ) => {
             try {
+
                 const accountNumber = moment().format("DDMMYYYYHHMMSS")
                 const id = localStorage.getItem(AppConstant.ID)
-                const APIObj = { ...data, userID: id, accountNumber };
 
-                const response = await api.post<any>(`/account`, APIObj);
+                const response = data.id ? await api.put<any>(`/account`, { ...data }) : await api.post<any>(`/account`, { ...data, userID: id, accountNumber });
 
+                // setTimeout(() => {
+                //     getAllAccount();
+                // }, 500);
                 // const { user, ...profileData } = result.data;
                 // dispatch({
                 //     type: "UPDATE_PROFILE",

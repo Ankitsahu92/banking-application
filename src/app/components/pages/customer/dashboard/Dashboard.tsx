@@ -48,8 +48,20 @@ export const Dashboard = ({
         }
   );
   const navigate = useNavigate();
-  const onSubmitClicked = () => {
-    createOrUpdateAccount(formData, navigate);
+  const onSubmitClicked = (data: any) => {
+    switch (selectedDashboardItem) {
+      case "Account List":
+        createOrUpdateAccount(data, navigate);
+        break;
+      case "Create Account":
+        createOrUpdateAccount(formData, navigate);
+        setTimeout(() => {
+          setSelectedDashboardItem(dashboard[0]);
+        }, 500);
+        break;
+      default:
+        break;
+    }
   };
 
   // useEffect(() => {
@@ -71,6 +83,16 @@ export const Dashboard = ({
     switch (selectedDashboardItem) {
       case dashboard[0]:
         getAllAccount();
+        break;
+      case dashboard[1]:
+        setFormData({
+          id: "",
+          accountNumber: "",
+          initialDeposit: 0,
+          typeOfAccount: "",
+          userID: "",
+          isEnabled: true,
+        });
         break;
       default:
         break;
@@ -104,7 +126,10 @@ export const Dashboard = ({
           </div>
           <div className="col col-6" style={{ overflow: "auto" }}>
             {selectedDashboardItem === dashboard[0] && (
-              <AccountList accountList={accountList || []} />
+              <AccountList
+                accountList={accountList || []}
+                onSubmitClicked={onSubmitClicked}
+              />
             )}
             {selectedDashboardItem === dashboard[1] && (
               <CreateAccount
