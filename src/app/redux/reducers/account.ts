@@ -1,11 +1,11 @@
 import { AccountType, ClientErrorType } from "../../global.types";
 import { AppActionTypes } from "../types";
-
+const initialAccount = { accountNumber: "", id: "", initialDeposit: 0, typeOfAccount: "SB", userID: "" }
 const initialState: AccountState = {
-    account: null,
+    account: initialAccount,
     accountList: [],
     error: {},
-    loading: true,
+    loading: false,
 };
 
 const accountReducer = (
@@ -34,7 +34,12 @@ const accountReducer = (
                 ...state,
                 loading: false,
             };
-
+        case "RESET_ACCOUNT":
+            return {
+                ...state,
+                account: initialAccount,
+                loading: false,
+            };
         default:
             return state;
     }

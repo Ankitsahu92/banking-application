@@ -46,7 +46,7 @@ export const createOrUpdateProfile =
                 //     type: "UPDATE_PROFILE",
                 //     payload: profileData,
                 // });
-                //navigate("/dashboard");
+                navigate("/dashboard");
             } catch (error: any) {
                 console.log(JSON.stringify(error));
 

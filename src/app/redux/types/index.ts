@@ -148,6 +148,9 @@ export interface UpdateAccountType {
 export interface UpdateAccountErrorType {
   type: "UPDATE_ACCOUNT_ERROR";
 }
+export interface ResetAccountType {
+  type: "RESET_ACCOUNT";
+}
 //*********************AccountType End ************ */
 
 export type AppActionTypes =
@@ -155,6 +158,7 @@ export type AppActionTypes =
   | GetAccounByIdType
   | CreateAccountType
   | UpdateAccountType
+  | ResetAccountType
   | UpdateAccountErrorType
 
   | SetAlertType

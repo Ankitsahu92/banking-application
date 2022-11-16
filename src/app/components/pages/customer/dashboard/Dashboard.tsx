@@ -1,7 +1,5 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Card from "../../../common/Card";
-// import img from "../../../../assets/images/bank-svgrepo-com.svg";
-// import { Link } from "react-router-dom";
 import AccountList from "./AccountList";
 import AddBeneficiary from "./AddBeneficiary";
 import CreateAccount from "./CreateAccount";
@@ -11,11 +9,12 @@ import ViewStatement from "./ViewStatement";
 
 import { connect } from "react-redux";
 import { AccountType } from "../../../../global.types";
-import { NavigateFunction } from "react-router-dom";
+import { NavigateFunction, useNavigate } from "react-router-dom";
 import { createOrUpdateAccount } from "../../../../redux/actions/accountAction";
 import { AppState } from "../../../../redux/store";
 
 const dashboard = [
+  "Create List",
   "Create Account",
   "Add Beneficiary",
   "Remove Beneficiary",
@@ -25,29 +24,48 @@ const dashboard = [
 export const Dashboard = ({
   account,
   accountList,
-  dashboardLoading,
+  loading,
   createOrUpdateAccount,
 }: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
     string | null
-  >(null);
-  console.log(selectedDashboardItem, "selectedDashboardItem");
+  >(dashboard[0]);
+
+  const [formData, setFormData] = useState<AccountType>(
+    account
+      ? account
+      : {
+          id: "",
+          accountNumber: "",
+          initialDeposit: 0,
+          typeOfAccount: "",
+          userID: "",
+        }
+  );
+  const navigate = useNavigate();
+  const onSubmitClicked = () => {
+    console.log("onSubmitClicked", formData);
+    createOrUpdateAccount(formData, navigate);
+  };
+
+  useEffect(() => {
+    console.log("useEffect", account);
+
+    setFormData(
+      account
+        ? account
+        : {
+            id: "",
+            accountNumber: "",
+            initialDeposit: 0,
+            typeOfAccount: "",
+            userID: "",
+          }
+    );
+  }, [account]);
+
   return (
     <>
-      {/* <Card>
-    <div className="row">
-      <div style={{ display: "inline-flex" }}>
-        <img src={img} className="imgBackIcon" alt="img Back Icon"></img>
-        <div style={{ textAlign: "right" }}>
-          <nav>
-            <ul>
-              <li>Dashboard</li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </div>
-  </Card> */}
       <Card>
         <div className="row">
           <div className="col col-6" style={{ height: "73vh" }}>
@@ -73,12 +91,18 @@ export const Dashboard = ({
             </Card>
           </div>
           <div className="col col-6">
-            {selectedDashboardItem === null && <AccountList />}
-            {selectedDashboardItem === dashboard[0] && <CreateAccount />}
-            {selectedDashboardItem === dashboard[1] && <AddBeneficiary />}
-            {selectedDashboardItem === dashboard[2] && <RemoveBeneficiary />}
-            {selectedDashboardItem === dashboard[3] && <TransferMoney />}
-            {selectedDashboardItem === dashboard[4] && <ViewStatement />}
+            {selectedDashboardItem === dashboard[0] && <AccountList />}
+            {selectedDashboardItem === dashboard[1] && (
+              <CreateAccount
+                formData={formData}
+                setFormData={setFormData}
+                onSubmitClicked={onSubmitClicked}
+              />
+            )}
+            {selectedDashboardItem === dashboard[2] && <AddBeneficiary />}
+            {selectedDashboardItem === dashboard[3] && <RemoveBeneficiary />}
+            {selectedDashboardItem === dashboard[4] && <TransferMoney />}
+            {selectedDashboardItem === dashboard[5] && <ViewStatement />}
           </div>
         </div>
       </Card>
@@ -91,7 +115,7 @@ Dashboard.propTypes = {};
 const mapStateToProps = (state: AppState) => ({
   account: state.account.account || null,
   accountList: state.account.accountList || [],
-  dashboardLoading: state.profile.loading || false,
+  loading: state.account.loading || false,
 });
 
 const mapDispatchToProps = {
@@ -108,5 +132,4 @@ interface DashboardProps {
     data: AccountType,
     navigate: NavigateFunction
   ) => void;
-  dashboardLoading: boolean;
 }

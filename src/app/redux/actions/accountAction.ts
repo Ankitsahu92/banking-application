@@ -4,7 +4,8 @@ import { AppConstant } from "../../components/utils/AppConstant";
 
 import api from "../../components/utils/utility";
 import { AccountType } from "../../global.types";
-import { CreateAccountType, GetAccounByIdType, GetAllAccountType, SetAlertType, UpdateAccountErrorType, UpdateAccountType } from "../types";
+import { CreateAccountType, GetAccounByIdType, GetAllAccountType, ResetAccountType, SetAlertType, UpdateAccountErrorType, UpdateAccountType } from "../types";
+import moment from 'moment'
 
 
 export const getAllAccount =
@@ -54,12 +55,16 @@ export const createOrUpdateAccount =
     (data: AccountType, navigate: NavigateFunction) =>
         async (
             dispatch: Dispatch<
-                CreateAccountType | UpdateAccountType | UpdateAccountErrorType | SetAlertType
+                CreateAccountType | UpdateAccountType | UpdateAccountErrorType | ResetAccountType | SetAlertType
             >
         ) => {
             try {
+                const accountNumber = moment().format("DDMMYYYYHHMMSS")
                 const id = localStorage.getItem(AppConstant.ID)
-                const response = await api.put<any>(`/account`, { ...data, id: id });
+                const APIObj = { ...data, userID: id, accountNumber };
+                console.log("APIObj", APIObj);
+
+                const response = await api.post<any>(`/account`, APIObj);
                 console.log(response, "createOrUpdateAccount");
 
                 // const { user, ...profileData } = result.data;
@@ -69,9 +74,15 @@ export const createOrUpdateAccount =
                 //     type: "UPDATE_PROFILE",
                 //     payload: response.data.data,
                 // });
-                // if (response.data.status === 200) {
-                //     navigate("/dashboard");
-                // }
+                if (response.data.status === 201) {
+                    // navigate("/dashboard");
+                    dispatch({
+                        type: "RESET_ACCOUNT"
+                    } as ResetAccountType);
+
+                    alert(response.data.msg)
+
+                }
                 //return true;
             } catch (error: any) {
                 console.log(JSON.stringify(error));

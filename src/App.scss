@@ -108,3 +108,8 @@ label {
   color: linen;
   opacity: 1;
 }
+
+.form-check-input:checked {
+  background-color: var(--project-primary-color) !important;
+  border-color: var(--project-primary-color) !important;
+}
