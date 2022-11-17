@@ -144,70 +144,68 @@ export const Dashboard = ({
   }, [selectedDashboardItem]);
   return (
     <>
-      <Card>
-        <div className="row">
-          <div className="col col-6" style={{ height: "73vh" }}>
-            <Card height="100%">
-              <ul className="list-group">
-                {dashboard.map((item: any, i: number) => {
-                  return (
-                    <li
-                      key={i}
-                      onClick={() => {
-                        setSelectedDashboardItem(item);
-                      }}
-                      style={{ cursor: "pointer" }}
-                      className={`list-group-item ${
-                        selectedDashboardItem === item ? "active" : ""
-                      }`}
-                    >
-                      {item}
-                    </li>
-                  );
-                })}
-              </ul>
-            </Card>
-          </div>
-          <div className="col col-6" style={{ overflow: "auto" }}>
-            {selectedDashboardItem === dashboard[0] && (
-              <AccountList
-                accountList={accountList || []}
-                onSubmitClicked={onSubmitClicked}
-              />
-            )}
-            {selectedDashboardItem === dashboard[1] && (
-              <CreateAccount
-                formData={formData}
-                setFormData={setFormData}
-                onSubmitClicked={onSubmitClicked}
-              />
-            )}
-            {selectedDashboardItem === dashboard[2] && (
-              <AddBeneficiary
-                formData={formData}
-                setFormData={setFormData}
-                onSubmitClicked={onSubmitClicked}
-              />
-            )}
-            {selectedDashboardItem === dashboard[3] && (
-              <RemoveBeneficiary
-                beneficiaryList={beneficiaryList || []}
-                onSubmitClicked={onSubmitClicked}
-              />
-            )}
-            {selectedDashboardItem === dashboard[4] && (
-              <TransferMoney
-                accountList={accountList || []}
-                beneficiaryList={beneficiaryList || []}
-                formData={formData}
-                setFormData={setFormData}
-                onSubmitClicked={onSubmitClicked}
-              />
-            )}
-            {selectedDashboardItem === dashboard[5] && <ViewStatement />}
-          </div>
+      <div className="flexRow">
+        <div className="flexColumn">
+          <Card height="100%">
+            <ul className="list-group">
+              {dashboard.map((item: any, i: number) => {
+                return (
+                  <li
+                    key={i}
+                    onClick={() => {
+                      setSelectedDashboardItem(item);
+                    }}
+                    style={{ cursor: "pointer" }}
+                    className={`list-group-item ${
+                      selectedDashboardItem === item ? "active" : ""
+                    }`}
+                  >
+                    {item}
+                  </li>
+                );
+              })}
+            </ul>
+          </Card>
         </div>
-      </Card>
+        <div className="flexColumn" style={{ overflow: "auto" }}>
+          {selectedDashboardItem === dashboard[0] && (
+            <AccountList
+              accountList={accountList || []}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
+          {selectedDashboardItem === dashboard[1] && (
+            <CreateAccount
+              formData={formData}
+              setFormData={setFormData}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
+          {selectedDashboardItem === dashboard[2] && (
+            <AddBeneficiary
+              formData={formData}
+              setFormData={setFormData}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
+          {selectedDashboardItem === dashboard[3] && (
+            <RemoveBeneficiary
+              beneficiaryList={beneficiaryList || []}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
+          {selectedDashboardItem === dashboard[4] && (
+            <TransferMoney
+              accountList={accountList || []}
+              beneficiaryList={beneficiaryList || []}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
+          {selectedDashboardItem === dashboard[5] && <ViewStatement />}
+        </div>
+      </div>
     </>
   );
 };
