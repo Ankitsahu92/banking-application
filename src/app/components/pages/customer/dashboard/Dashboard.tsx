@@ -134,9 +134,10 @@ export const Dashboard = ({
         break;
       case dashboard[4]:
         getAllBeneficiary();
+        getAllAccount();
         break;
       case dashboard[5]:
-        getAllBeneficiary();
+        getAllAccount();
         break;
       default:
         break;
@@ -203,7 +204,15 @@ export const Dashboard = ({
               onSubmitClicked={onSubmitClicked}
             />
           )}
-          {selectedDashboardItem === dashboard[5] && <ViewStatement />}
+          {selectedDashboardItem === dashboard[5] && (
+            <ViewStatement
+              accountList={accountList || []}
+              beneficiaryList={beneficiaryList || []}
+              formData={formData}
+              setFormData={setFormData}
+              onSubmitClicked={onSubmitClicked}
+            />
+          )}
         </div>
       </div>
     </>
