@@ -3,6 +3,7 @@ import {
   AccountType,
   BeneficiaryType,
   DashboardType,
+  TransactionHistoryType,
 } from "../../../../global.types";
 import Card from "../../../common/Card";
 import { DataTable } from "primereact/datatable";
@@ -25,21 +26,21 @@ const ViewStatement = ({
   const [selectedAccount, setselectedAccount] = useState<AccountType | null>(
     null
   );
-
-  const statement = [
-    {
-      date: new Date(),
-      reference: "123",
-      amount: 500,
-      transactionType: "CR",
-    },
-    {
-      date: new Date().setDate(2),
-      reference: "123453",
-      amount: 2000,
-      transactionType: "DR",
-    },
-  ];
+  const [statement, setStatement] = useState<TransactionHistoryType[]>([]);
+  // const statement = [
+  //   {
+  //     date: new Date(),
+  //     reference: "123",
+  //     amount: 500,
+  //     transactionType: "CR",
+  //   },
+  //   {
+  //     date: new Date().setDate(2),
+  //     reference: "123453",
+  //     amount: 2000,
+  //     transactionType: "DR",
+  //   },
+  // ];
   const dateBodyTemplate = (rowData: any) => {
     return <div>{moment(rowData.date).format("DD-MMM-YYYY")}</div>;
   };
@@ -83,7 +84,7 @@ const ViewStatement = ({
       <div className="row">
         <div className="col-12">
           <DataTable
-            value={statement}
+            value={selectedAccount?.transaction || []}
             paginator
             responsiveLayout="scroll"
             paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown"
@@ -92,7 +93,7 @@ const ViewStatement = ({
             rowsPerPageOptions={[10, 20, 50]}
           >
             <Column body={dateBodyTemplate} header="Date"></Column>
-            <Column field="reference" header="Reference"></Column>
+            <Column field="referenceNumber" header="Reference"></Column>
             <Column field="amount" header="Amount"></Column>
             <Column field="transactionType" header="Transaction Type"></Column>
           </DataTable>

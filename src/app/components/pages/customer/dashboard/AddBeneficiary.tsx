@@ -1,13 +1,18 @@
 import React, { ChangeEvent } from "react";
-import { DashboardType } from "../../../../global.types";
+import {
+  DashboardType,
+  OtherBeneficiaryAccountsType,
+} from "../../../../global.types";
 import Card from "../../../common/Card";
 
 const AddBeneficiary = ({
   formData,
+  otherBeneficiary,
   setFormData,
   onSubmitClicked,
 }: {
   formData: DashboardType;
+  otherBeneficiary: OtherBeneficiaryAccountsType[];
   setFormData: (value: React.SetStateAction<DashboardType>) => void;
   onSubmitClicked: any;
 }) => {
@@ -31,6 +36,13 @@ const AddBeneficiary = ({
             <h1>Add Beneficiary</h1>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-md-12">
+            <select name="accountNumber" id="accountNumber">
+              <option value={-1}>Select Beneficiary Account </option>
+            </select>
+          </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
             <input

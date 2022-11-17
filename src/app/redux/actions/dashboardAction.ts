@@ -3,18 +3,21 @@ import { NavigateFunction } from "react-router-dom";
 import { AppConstant } from "../../components/utils/AppConstant";
 
 import api from "../../components/utils/utility";
-import { AccountType, BeneficiaryType } from "../../global.types";
+import { AccountType, BeneficiaryType, TransferMoneyType } from "../../global.types";
 import {
     CreateAccountType,
     CreateBeneficiaryType,
+    CreateTransferMoneyType,
     DeleteBeneficiaryType,
     GetAccounByIdType,
     GetAllAccountType,
     GetAllBeneficiaryType,
+    GetAllOtherBeneficiaryAccountsType,
     GetBeneficiaryByIdType,
     ResetAccountType,
     ResetBeneficiaryType,
     SetAlertType,
+    TransferMoneyErrorType,
     UpdateAccountErrorType,
     UpdateAccountType,
     UpdateBeneficiaryErrorType,
@@ -212,7 +215,6 @@ export const deleteBeneficiary =
         ) => {
             try {
                 const response = await api.delete<any>(`/beneficiary/${id}`)
-                console.log(response.data, "delete response.data");
 
                 if (response.data.status === 200) {
                     dispatch({
@@ -228,5 +230,50 @@ export const deleteBeneficiary =
                 dispatch({
                     type: "UPDATE_BENEFICIARY_ERROR",
                 } as UpdateBeneficiaryErrorType);
+            }
+        };
+
+export const foundTransferMoney =
+    (data: TransferMoneyType, navigate: NavigateFunction) =>
+        async (
+            dispatch: Dispatch<
+                | CreateTransferMoneyType
+                | TransferMoneyErrorType
+                | SetAlertType
+            >
+        ) => {
+            try {
+                const response = await api.post<any>(`/common/tranferMoney`, { ...data });
+
+                if (response.data.status === 201) {
+                    dispatch({
+                        type: "CREATE_TRANSFER_MONEY",
+                    } as CreateTransferMoneyType);
+                }
+                alert(response.data.msg);
+            } catch (error: any) {
+                dispatch({
+                    type: "TRANSFER_MONEY_ERROR",
+                } as TransferMoneyErrorType);
+
+                // return false;
+            }
+        };
+
+
+export const getOtherBeneficiaryAccounts =
+    () =>
+        async (dispatch: Dispatch<GetAllOtherBeneficiaryAccountsType | UpdateAccountErrorType>) => {
+            try {
+                const userID = localStorage.getItem(AppConstant.ID);
+                const response = await api.get<any>(`/common/getBeneficiary/${userID}`);
+                dispatch({
+                    type: "GET_ALL_OTHER_BENEFICIARY_ACCOUNTS",
+                    payload: response.data.data,
+                } as GetAllOtherBeneficiaryAccountsType);
+            } catch (error) {
+                dispatch({
+                    type: "UPDATE_ACCOUNT_ERROR",
+                } as UpdateAccountErrorType);
             }
         };

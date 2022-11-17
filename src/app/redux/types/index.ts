@@ -4,8 +4,10 @@ import {
   BeneficiaryType,
   ClientErrorType,
   CommentType,
+  OtherBeneficiaryAccountsType,
   PostType,
   ProfileType,
+  TransferMoneyType,
   UserType,
 } from "../../global.types";
 
@@ -126,6 +128,8 @@ export interface DeleteCommentType {
 }
 
 //*********************AccountType ************ */
+
+
 export interface GetAllAccountType {
   type: "GET_ALL_ACCOUNT";
   payload: AccountType[];
@@ -187,6 +191,21 @@ export interface DeleteBeneficiaryType {
     id: string;
   };
 }
+
+export interface CreateTransferMoneyType {
+  type: "CREATE_TRANSFER_MONEY";
+  payload: TransferMoneyType;
+}
+
+export interface TransferMoneyErrorType {
+  type: "TRANSFER_MONEY_ERROR";
+}
+
+export interface GetAllOtherBeneficiaryAccountsType {
+  type: "GET_ALL_OTHER_BENEFICIARY_ACCOUNTS";
+  payload: OtherBeneficiaryAccountsType[];
+}
+
 //*********************AccountType End ************ */
 
 export type AppActionTypes =
@@ -204,6 +223,11 @@ export type AppActionTypes =
   | UpdateBeneficiaryErrorType
   | ResetBeneficiaryType
   | DeleteBeneficiaryType
+
+  | CreateTransferMoneyType
+  | TransferMoneyErrorType
+
+  | GetAllOtherBeneficiaryAccountsType
 
   | SetAlertType
   | RemoveAlertType

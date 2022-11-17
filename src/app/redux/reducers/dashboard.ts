@@ -1,15 +1,24 @@
-import { AccountType, BeneficiaryType, ClientErrorType } from "../../global.types";
+import { AccountType, BeneficiaryType, ClientErrorType, OtherBeneficiaryAccountsType, TransferMoneyType } from "../../global.types";
 import { AppActionTypes } from "../types";
 const initialAccount = { accountNumber: "", id: "", initialDeposit: 0, typeOfAccount: "SB", userID: "", isEnabled: true } as AccountType
 
 const initialBeneficiary = { confirmAccountNumber: "", accountNumber: "", id: "", acountHolderName: "", typeOfAccount: "SB", userID: "", isEnabled: true } as BeneficiaryType
+
+const initialTransferMoney = {
+    amount: 0,
+    accountNumber: "",
+    id: "",
+    comment: "",
+    tranferFromID: "", tranferToID: ""
+} as TransferMoneyType
 
 const initialState: DashboardState = {
     account: initialAccount,
     accountList: [],
     beneficiary: initialBeneficiary,
     beneficiaryList: [],
-
+    transferMoney: initialTransferMoney,
+    otherBeneficiary: [],
     error: {},
     loading: false,
 };
@@ -86,6 +95,27 @@ const dashboardReducer = (
                 loading: false,
             };
         //ACCOUNT End
+
+        //Transfer Money
+        case "CREATE_TRANSFER_MONEY":
+            return {
+                ...state,
+                transferMoney: action.payload,
+                loading: false,
+            };
+
+        case "TRANSFER_MONEY_ERROR":
+            return {
+                ...state,
+                loading: false,
+            };
+
+        case "GET_ALL_OTHER_BENEFICIARY_ACCOUNTS":
+            return {
+                ...state,
+                otherBeneficiary: action.payload,
+                loading: false,
+            };
         default:
             return state;
     }
@@ -99,6 +129,10 @@ export interface DashboardState {
 
     beneficiary: BeneficiaryType,
     beneficiaryList: BeneficiaryType[],
+
+    transferMoney: TransferMoneyType,
+
+    otherBeneficiary: OtherBeneficiaryAccountsType[],
 
     loading: boolean;
     error: ClientErrorType | {};

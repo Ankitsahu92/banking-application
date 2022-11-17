@@ -12,14 +12,18 @@ import {
   AccountType,
   BeneficiaryType,
   DashboardType,
+  OtherBeneficiaryAccountsType,
+  TransferMoneyType,
 } from "../../../../global.types";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import {
   createOrUpdateAccount,
   createOrUpdateBeneficiary,
   deleteBeneficiary,
+  foundTransferMoney,
   getAllAccount,
   getAllBeneficiary,
+  getOtherBeneficiaryAccounts,
 } from "../../../../redux/actions/dashboardAction";
 import { AppState } from "../../../../redux/store";
 
@@ -28,8 +32,8 @@ const dashboard = [
   "Create Account",
   "Add Beneficiary",
   "Remove Beneficiary",
-  "Tranfer Money",
-  "View Startment",
+  "Transfer Money",
+  "View Statement",
 ];
 
 const initialAccount = {
@@ -51,6 +55,15 @@ const initialBeneficiary = {
   isEnabled: true,
 } as BeneficiaryType;
 
+const initialTransferMoney = {
+  amount: 0,
+  accountNumber: "",
+  id: "",
+  comment: "",
+  tranferFromID: "",
+  tranferToID: "",
+} as TransferMoneyType;
+
 export const Dashboard = ({
   account,
   accountList,
@@ -63,6 +76,12 @@ export const Dashboard = ({
   getAllBeneficiary,
   createOrUpdateBeneficiary,
   deleteBeneficiary,
+
+  transferMoney,
+  foundTransferMoney,
+
+  getOtherBeneficiaryAccounts,
+  otherBeneficiary,
 }: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
     string | null
@@ -71,6 +90,7 @@ export const Dashboard = ({
   const [formData, setFormData] = useState<DashboardType>({
     account: account || initialAccount,
     beneficiary: beneficiary || initialBeneficiary,
+    transferMoney: transferMoney || initialTransferMoney,
   });
   const navigate = useNavigate();
   const onSubmitClicked = (data: any) => {
@@ -85,7 +105,6 @@ export const Dashboard = ({
         }, 500);
         break;
       case "Add Beneficiary":
-        console.log(formData.beneficiary, "formData.beneficiary");
         if (
           formData.beneficiary.accountNumber ===
           formData.beneficiary.confirmAccountNumber
@@ -103,9 +122,10 @@ export const Dashboard = ({
           deleteBeneficiary(data.id, navigate);
         }
         break;
-      case "Tranfer Money":
+      case "Transfer Money":
+        foundTransferMoney(data, navigate);
         break;
-      case "View Startment":
+      case "View Statement":
         break;
       default:
         break;
@@ -135,6 +155,7 @@ export const Dashboard = ({
       case dashboard[4]:
         getAllBeneficiary();
         getAllAccount();
+        getOtherBeneficiaryAccounts();
         break;
       case dashboard[5]:
         getAllAccount();
@@ -185,6 +206,7 @@ export const Dashboard = ({
           {selectedDashboardItem === dashboard[2] && (
             <AddBeneficiary
               formData={formData}
+              otherBeneficiary={otherBeneficiary || []}
               setFormData={setFormData}
               onSubmitClicked={onSubmitClicked}
             />
@@ -199,6 +221,7 @@ export const Dashboard = ({
             <TransferMoney
               accountList={accountList || []}
               beneficiaryList={beneficiaryList || []}
+              otherBeneficiary={otherBeneficiary || []}
               formData={formData}
               setFormData={setFormData}
               onSubmitClicked={onSubmitClicked}
@@ -229,6 +252,9 @@ const mapStateToProps = (state: AppState) => ({
 
   beneficiary: state.dashboard.beneficiary || null,
   beneficiaryList: state.dashboard.beneficiaryList || [],
+
+  transferMoney: state.dashboard.transferMoney || null,
+  otherBeneficiary: state.dashboard.otherBeneficiary || [],
 });
 
 const mapDispatchToProps = {
@@ -238,6 +264,10 @@ const mapDispatchToProps = {
   getAllBeneficiary,
   createOrUpdateBeneficiary,
   deleteBeneficiary,
+
+  foundTransferMoney,
+
+  getOtherBeneficiaryAccounts,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
@@ -261,4 +291,13 @@ interface DashboardProps {
     navigate: NavigateFunction
   ) => void;
   deleteBeneficiary: (id: string, navigate: NavigateFunction) => void;
+
+  transferMoney?: TransferMoneyType;
+  foundTransferMoney: (
+    beneficiaryData: TransferMoneyType,
+    navigate: NavigateFunction
+  ) => void;
+
+  getOtherBeneficiaryAccounts: () => void;
+  otherBeneficiary: OtherBeneficiaryAccountsType[];
 }
