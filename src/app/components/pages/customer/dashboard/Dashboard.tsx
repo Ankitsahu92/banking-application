@@ -17,6 +17,7 @@ import { NavigateFunction, useNavigate } from "react-router-dom";
 import {
   createOrUpdateAccount,
   createOrUpdateBeneficiary,
+  deleteBeneficiary,
   getAllAccount,
   getAllBeneficiary,
 } from "../../../../redux/actions/dashboardAction";
@@ -61,6 +62,7 @@ export const Dashboard = ({
   beneficiaryList,
   getAllBeneficiary,
   createOrUpdateBeneficiary,
+  deleteBeneficiary,
 }: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
     string | null
@@ -96,25 +98,15 @@ export const Dashboard = ({
         //   setSelectedDashboardItem(dashboard[0]);
         // }, 500);
         break;
+      case "Remove Beneficiary":
+        if (data.id && data.action === "delete") {
+          deleteBeneficiary(data.id, navigate);
+        }
+        break;
       default:
         break;
     }
   };
-
-  // useEffect(() => {
-
-  //   setFormData(
-  //     account
-  //       ? account
-  //       : {
-  //           id: "",
-  //           accountNumber: "",
-  //           initialDeposit: 0,
-  //           typeOfAccount: "",
-  //           userID: "",
-  //         }
-  //   );
-  // }, [account]);
 
   useEffect(() => {
     switch (selectedDashboardItem) {
@@ -132,6 +124,9 @@ export const Dashboard = ({
           ...formData,
           beneficiary: { ...initialBeneficiary },
         });
+        break;
+      case dashboard[3]:
+        getAllBeneficiary();
         break;
       default:
         break;
@@ -184,7 +179,12 @@ export const Dashboard = ({
                 onSubmitClicked={onSubmitClicked}
               />
             )}
-            {selectedDashboardItem === dashboard[3] && <RemoveBeneficiary />}
+            {selectedDashboardItem === dashboard[3] && (
+              <RemoveBeneficiary
+                beneficiaryList={beneficiaryList || []}
+                onSubmitClicked={onSubmitClicked}
+              />
+            )}
             {selectedDashboardItem === dashboard[4] && <TransferMoney />}
             {selectedDashboardItem === dashboard[5] && <ViewStatement />}
           </div>
@@ -212,6 +212,7 @@ const mapDispatchToProps = {
 
   getAllBeneficiary,
   createOrUpdateBeneficiary,
+  deleteBeneficiary,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
@@ -234,4 +235,5 @@ interface DashboardProps {
     beneficiaryData: BeneficiaryType,
     navigate: NavigateFunction
   ) => void;
+  deleteBeneficiary: (id: string, navigate: NavigateFunction) => void;
 }

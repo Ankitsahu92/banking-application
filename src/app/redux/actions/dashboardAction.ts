@@ -7,6 +7,7 @@ import { AccountType, BeneficiaryType } from "../../global.types";
 import {
     CreateAccountType,
     CreateBeneficiaryType,
+    DeleteBeneficiaryType,
     GetAccounByIdType,
     GetAllAccountType,
     GetAllBeneficiaryType,
@@ -121,6 +122,7 @@ export const getAllBeneficiary =
             try {
                 const userID = localStorage.getItem(AppConstant.ID);
                 const response = await api.get<any>(`/beneficiary/userID/${userID}`);
+
                 dispatch({
                     type: "GET_ALL_BENEFICIARY",
                     payload: response.data.data,
@@ -131,7 +133,6 @@ export const getAllBeneficiary =
                 } as UpdateBeneficiaryErrorType);
             }
         };
-
 
 export const getBeneficiaryByID =
     () =>
@@ -149,7 +150,6 @@ export const getBeneficiaryByID =
                 } as UpdateBeneficiaryErrorType);
             }
         };
-
 
 export const createOrUpdateBeneficiary =
     (data: BeneficiaryType, navigate: NavigateFunction) =>
@@ -193,9 +193,40 @@ export const createOrUpdateBeneficiary =
             } catch (error: any) {
                 //alertError(error);
                 dispatch({
-                    type: "UPDATE_BENEFICIARY",
-                } as UpdateBeneficiaryType);
+                    type: "UPDATE_BENEFICIARY_ERROR",
+                } as UpdateBeneficiaryErrorType);
 
                 // return false;
+            }
+        };
+
+
+export const deleteBeneficiary =
+    (id: string, navigate: NavigateFunction) =>
+        async (
+            dispatch: Dispatch<
+                | DeleteBeneficiaryType
+                | UpdateBeneficiaryErrorType
+                | SetAlertType
+            >
+        ) => {
+            try {
+                const response = await api.delete<any>(`/beneficiary/${id}`)
+                console.log(response.data, "delete response.data");
+
+                if (response.data.status === 200) {
+                    dispatch({
+                        type: "DELETE_BENEFICIARY",
+                        payload: {
+                            id: id
+                        }
+                    } as DeleteBeneficiaryType);
+                    alert(response.data.msg);
+                }
+            } catch (error: any) {
+                //alertError(error);
+                dispatch({
+                    type: "UPDATE_BENEFICIARY_ERROR",
+                } as UpdateBeneficiaryErrorType);
             }
         };

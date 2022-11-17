@@ -181,6 +181,12 @@ export interface ResetBeneficiaryType {
   type: "RESET_BENEFICIARY";
 }
 
+export interface DeleteBeneficiaryType {
+  type: "DELETE_BENEFICIARY";
+  payload: {
+    id: string;
+  };
+}
 //*********************AccountType End ************ */
 
 export type AppActionTypes =
@@ -197,6 +203,7 @@ export type AppActionTypes =
   | UpdateBeneficiaryType
   | UpdateBeneficiaryErrorType
   | ResetBeneficiaryType
+  | DeleteBeneficiaryType
 
   | SetAlertType
   | RemoveAlertType

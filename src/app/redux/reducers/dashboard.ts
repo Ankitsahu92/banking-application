@@ -72,6 +72,13 @@ const dashboardReducer = (
                 ...state,
                 loading: false,
             };
+        case "DELETE_BENEFICIARY":
+            const beneficiaryList = state.beneficiaryList.filter(f => f.id !== action.payload.id);
+            return {
+                ...state,
+                beneficiaryList: beneficiaryList,
+                loading: false,
+            };
         case "RESET_BENEFICIARY":
             return {
                 ...state,
