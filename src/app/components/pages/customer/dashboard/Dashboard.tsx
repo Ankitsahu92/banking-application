@@ -103,6 +103,10 @@ export const Dashboard = ({
           deleteBeneficiary(data.id, navigate);
         }
         break;
+      case "Tranfer Money":
+        break;
+      case "View Startment":
+        break;
       default:
         break;
     }
@@ -126,6 +130,12 @@ export const Dashboard = ({
         });
         break;
       case dashboard[3]:
+        getAllBeneficiary();
+        break;
+      case dashboard[4]:
+        getAllBeneficiary();
+        break;
+      case dashboard[5]:
         getAllBeneficiary();
         break;
       default:
@@ -185,7 +195,15 @@ export const Dashboard = ({
                 onSubmitClicked={onSubmitClicked}
               />
             )}
-            {selectedDashboardItem === dashboard[4] && <TransferMoney />}
+            {selectedDashboardItem === dashboard[4] && (
+              <TransferMoney
+                accountList={accountList || []}
+                beneficiaryList={beneficiaryList || []}
+                formData={formData}
+                setFormData={setFormData}
+                onSubmitClicked={onSubmitClicked}
+              />
+            )}
             {selectedDashboardItem === dashboard[5] && <ViewStatement />}
           </div>
         </div>

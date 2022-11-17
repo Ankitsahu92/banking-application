@@ -7,6 +7,7 @@ type Props = {};
 const ViewStatement = (props: Props) => {
   return (
     <Card height="99%">
+      <h1>View Startment</h1>
       <div className="row">
         <div className="col-6">
           <select placeholder="Select Your Account No">
