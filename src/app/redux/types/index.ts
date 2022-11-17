@@ -1,6 +1,7 @@
 import {
   AccountType,
   AlertType,
+  BeneficiaryType,
   ClientErrorType,
   CommentType,
   PostType,
@@ -151,6 +152,35 @@ export interface UpdateAccountErrorType {
 export interface ResetAccountType {
   type: "RESET_ACCOUNT";
 }
+
+
+export interface GetAllBeneficiaryType {
+  type: "GET_ALL_BENEFICIARY";
+  payload: BeneficiaryType[];
+}
+
+export interface GetBeneficiaryByIdType {
+  type: "GET_BENEFICIARY_BY_ID";
+  payload: BeneficiaryType;
+}
+
+export interface CreateBeneficiaryType {
+  type: "CREATE_BENEFICIARY";
+  payload: BeneficiaryType;
+}
+
+export interface UpdateBeneficiaryType {
+  type: "UPDATE_BENEFICIARY";
+  payload: BeneficiaryType;
+}
+
+export interface UpdateBeneficiaryErrorType {
+  type: "UPDATE_BENEFICIARY_ERROR";
+}
+export interface ResetBeneficiaryType {
+  type: "RESET_BENEFICIARY";
+}
+
 //*********************AccountType End ************ */
 
 export type AppActionTypes =
@@ -160,6 +190,13 @@ export type AppActionTypes =
   | UpdateAccountType
   | ResetAccountType
   | UpdateAccountErrorType
+
+  | GetAllBeneficiaryType
+  | GetBeneficiaryByIdType
+  | CreateBeneficiaryType
+  | UpdateBeneficiaryType
+  | UpdateBeneficiaryErrorType
+  | ResetBeneficiaryType
 
   | SetAlertType
   | RemoveAlertType

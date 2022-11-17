@@ -1,18 +1,25 @@
-import { AccountType, ClientErrorType } from "../../global.types";
+import { AccountType, BeneficiaryType, ClientErrorType } from "../../global.types";
 import { AppActionTypes } from "../types";
 const initialAccount = { accountNumber: "", id: "", initialDeposit: 0, typeOfAccount: "SB", userID: "", isEnabled: true } as AccountType
-const initialState: AccountState = {
+
+const initialBeneficiary = { confirmAccountNumber: "", accountNumber: "", id: "", acountHolderName: "", typeOfAccount: "SB", userID: "", isEnabled: true } as BeneficiaryType
+
+const initialState: DashboardState = {
     account: initialAccount,
     accountList: [],
+    beneficiary: initialBeneficiary,
+    beneficiaryList: [],
+
     error: {},
     loading: false,
 };
 
-const accountReducer = (
-    state: AccountState = initialState,
+const dashboardReducer = (
+    state: DashboardState = initialState,
     action: AppActionTypes
-): AccountState => {
+): DashboardState => {
     switch (action.type) {
+        //ACCOUNT Start
         case "GET_ALL_ACCOUNT":
             return {
                 ...state,
@@ -40,16 +47,52 @@ const accountReducer = (
                 account: initialAccount,
                 loading: false,
             };
+        //ACCOUNT End
+
+
+        //ACCOUNT Start
+        case "GET_ALL_BENEFICIARY":
+            return {
+                ...state,
+                beneficiaryList: action.payload,
+                loading: false,
+            };
+
+        case "CREATE_BENEFICIARY":
+        case "UPDATE_BENEFICIARY":
+        case "GET_BENEFICIARY_BY_ID":
+            return {
+                ...state,
+                beneficiary: action.payload,
+                loading: false,
+            };
+
+        case "UPDATE_BENEFICIARY_ERROR":
+            return {
+                ...state,
+                loading: false,
+            };
+        case "RESET_BENEFICIARY":
+            return {
+                ...state,
+                account: initialAccount,
+                loading: false,
+            };
+        //ACCOUNT End
         default:
             return state;
     }
 };
 
-export default accountReducer;
+export default dashboardReducer;
 
-export interface AccountState {
+export interface DashboardState {
     account?: AccountType | null;
     accountList?: AccountType[];
+
+    beneficiary: BeneficiaryType,
+    beneficiaryList: BeneficiaryType[],
+
     loading: boolean;
     error: ClientErrorType | {};
 }

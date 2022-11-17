@@ -8,11 +8,17 @@ import TransferMoney from "./TransferMoney";
 import ViewStatement from "./ViewStatement";
 
 import { connect } from "react-redux";
-import { AccountType } from "../../../../global.types";
+import {
+  AccountType,
+  BeneficiaryType,
+  DashboardType,
+} from "../../../../global.types";
 import { NavigateFunction, useNavigate } from "react-router-dom";
 import {
   createOrUpdateAccount,
+  createOrUpdateBeneficiary,
   getAllAccount,
+  getAllBeneficiary,
 } from "../../../../redux/actions/dashboardAction";
 import { AppState } from "../../../../redux/store";
 
@@ -24,29 +30,46 @@ const dashboard = [
   "Tranfer Money",
   "View Startment",
 ];
+
+const initialAccount = {
+  accountNumber: "",
+  id: "",
+  initialDeposit: 0,
+  typeOfAccount: "SB",
+  userID: "",
+  isEnabled: true,
+} as AccountType;
+
+const initialBeneficiary = {
+  accountNumber: "",
+  confirmAccountNumber: "",
+  id: "",
+  acountHolderName: "",
+  typeOfAccount: "SB",
+  userID: "",
+  isEnabled: true,
+} as BeneficiaryType;
+
 export const Dashboard = ({
   account,
   accountList,
   loading,
   getAllAccount,
   createOrUpdateAccount,
+
+  beneficiary,
+  beneficiaryList,
+  getAllBeneficiary,
+  createOrUpdateBeneficiary,
 }: DashboardProps) => {
   const [selectedDashboardItem, setSelectedDashboardItem] = useState<
     string | null
   >(dashboard[0]);
 
-  const [formData, setFormData] = useState<AccountType>(
-    account
-      ? account
-      : {
-          id: "",
-          accountNumber: "",
-          initialDeposit: 0,
-          typeOfAccount: "",
-          userID: "",
-          isEnabled: true,
-        }
-  );
+  const [formData, setFormData] = useState<DashboardType>({
+    account: account || initialAccount,
+    beneficiary: beneficiary || initialBeneficiary,
+  });
   const navigate = useNavigate();
   const onSubmitClicked = (data: any) => {
     switch (selectedDashboardItem) {
@@ -54,10 +77,24 @@ export const Dashboard = ({
         createOrUpdateAccount(data, navigate);
         break;
       case "Create Account":
-        createOrUpdateAccount(formData, navigate);
+        createOrUpdateAccount(formData.account, navigate);
         setTimeout(() => {
           setSelectedDashboardItem(dashboard[0]);
         }, 500);
+        break;
+      case "Add Beneficiary":
+        console.log(formData.beneficiary, "formData.beneficiary");
+        if (
+          formData.beneficiary.accountNumber ===
+          formData.beneficiary.confirmAccountNumber
+        ) {
+          createOrUpdateBeneficiary(formData.beneficiary, navigate);
+        } else {
+          alert("Account number confirm account number mismatch!!!");
+        }
+        // setTimeout(() => {
+        //   setSelectedDashboardItem(dashboard[0]);
+        // }, 500);
         break;
       default:
         break;
@@ -86,12 +123,14 @@ export const Dashboard = ({
         break;
       case dashboard[1]:
         setFormData({
-          id: "",
-          accountNumber: "",
-          initialDeposit: 0,
-          typeOfAccount: "",
-          userID: "",
-          isEnabled: true,
+          ...formData,
+          account: { ...initialAccount },
+        });
+        break;
+      case dashboard[2]:
+        setFormData({
+          ...formData,
+          beneficiary: { ...initialBeneficiary },
         });
         break;
       default:
@@ -138,7 +177,13 @@ export const Dashboard = ({
                 onSubmitClicked={onSubmitClicked}
               />
             )}
-            {selectedDashboardItem === dashboard[2] && <AddBeneficiary />}
+            {selectedDashboardItem === dashboard[2] && (
+              <AddBeneficiary
+                formData={formData}
+                setFormData={setFormData}
+                onSubmitClicked={onSubmitClicked}
+              />
+            )}
             {selectedDashboardItem === dashboard[3] && <RemoveBeneficiary />}
             {selectedDashboardItem === dashboard[4] && <TransferMoney />}
             {selectedDashboardItem === dashboard[5] && <ViewStatement />}
@@ -152,25 +197,41 @@ export const Dashboard = ({
 Dashboard.propTypes = {};
 
 const mapStateToProps = (state: AppState) => ({
+  loading: state.dashboard.loading || false,
+
   account: state.dashboard.account || null,
   accountList: state.dashboard.accountList || [],
-  loading: state.dashboard.loading || false,
+
+  beneficiary: state.dashboard.beneficiary || null,
+  beneficiaryList: state.dashboard.beneficiaryList || [],
 });
 
 const mapDispatchToProps = {
   createOrUpdateAccount,
   getAllAccount,
+
+  getAllBeneficiary,
+  createOrUpdateBeneficiary,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 
 interface DashboardProps {
+  loading: boolean;
+
   account?: AccountType | null;
   accountList?: AccountType[];
-  loading: boolean;
   getAllAccount: () => void;
   createOrUpdateAccount: (
-    data: AccountType,
+    accountData: AccountType,
+    navigate: NavigateFunction
+  ) => void;
+
+  beneficiary?: BeneficiaryType | null;
+  beneficiaryList: BeneficiaryType[];
+  getAllBeneficiary: () => void;
+  createOrUpdateBeneficiary: (
+    beneficiaryData: BeneficiaryType,
     navigate: NavigateFunction
   ) => void;
 }

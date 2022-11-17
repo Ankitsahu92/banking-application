@@ -1,23 +1,22 @@
 import React, { ChangeEvent } from "react";
-import { AccountType } from "../../../../global.types";
+import { DashboardType } from "../../../../global.types";
 import Card from "../../../common/Card";
-
-// type Props = {
-//   formData?: AccountType | null | undefined;
-// };
 
 const CreateAccount = ({
   formData,
   setFormData,
   onSubmitClicked,
 }: {
-  formData: AccountType;
-  setFormData: (value: React.SetStateAction<AccountType>) => void;
+  formData: DashboardType;
+  setFormData: (value: React.SetStateAction<DashboardType>) => void;
   onSubmitClicked: any;
 }) => {
+  const account = formData.account;
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
+      const account = { ...prev.account, [e.target.name]: e.target.value };
+      return { ...prev, account: account };
     });
   };
 
@@ -37,9 +36,9 @@ const CreateAccount = ({
                 style={{ width: "300px" }}
                 type="text"
                 onChange={onChange}
+                defaultValue={account?.initialDeposit}
                 name="initialDeposit"
                 className="form-control"
-                defaultValue={formData?.initialDeposit}
                 placeholder="Enter Initial Deposit"
               ></input>
             </div>
@@ -51,7 +50,7 @@ const CreateAccount = ({
             <div className="col-md-12">
               <div className="form-check" style={{ width: "300px" }}>
                 <input
-                  defaultChecked={formData?.typeOfAccount === "SB"}
+                  defaultChecked={account?.typeOfAccount === "SB"}
                   className="form-check-input"
                   type="radio"
                   onChange={onChange}
@@ -65,7 +64,7 @@ const CreateAccount = ({
               </div>
               <div className="form-check" style={{ width: "300px" }}>
                 <input
-                  defaultChecked={formData?.typeOfAccount === "CA"}
+                  defaultChecked={account?.typeOfAccount === "CA"}
                   className="form-check-input"
                   type="radio"
                   onChange={onChange}

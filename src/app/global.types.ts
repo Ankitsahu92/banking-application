@@ -88,6 +88,7 @@ export interface PostType {
     date: Date;
 }
 
+
 export interface AccountType {
     id: string,
     isEnabled: boolean,
@@ -96,4 +97,23 @@ export interface AccountType {
     typeOfAccount: string,
     userID: string,
 }
+
+
+export interface BeneficiaryType {
+    id: string,
+    isEnabled: boolean,
+    userID: string,
+    acountHolderName: string,
+    accountNumber: string,
+    confirmAccountNumber: string,
+    typeOfAccount: string,
+}
+
+
+
+export interface DashboardType {
+    account: AccountType,
+    beneficiary: BeneficiaryType
+}
+
 
