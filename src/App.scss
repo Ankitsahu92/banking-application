@@ -3,6 +3,10 @@
 @import "primereact/resources/primereact.min.css"; //core css
 @import "primeicons/primeicons.css"; //icons
 
+.pi {
+  font-family: "primeicons" !important;
+}
+
 ::-webkit-input-placeholder,
 ::-moz-placeholder,
 :-ms-input-placeholder {
@@ -103,4 +107,24 @@ label {
   background-color: dimgrey;
   color: linen;
   opacity: 1;
+}
+
+.form-check-input:checked {
+  background-color: var(--project-primary-color) !important;
+  border-color: var(--project-primary-color) !important;
+}
+
+.flexRow {
+  display: flex;
+  height: 100%;
+}
+
+.flexColumn {
+  flex: 50%;
+  box-shadow: inset 0 0 10px var(--project-primary-color);
+  padding: 10px;
+}
+
+h1 {
+  padding-left: 5px;
 }

@@ -1,9 +1,13 @@
 import {
+  AccountType,
   AlertType,
+  BeneficiaryType,
   ClientErrorType,
   CommentType,
+  OtherBeneficiaryAccountsType,
   PostType,
   ProfileType,
+  TransferMoneyType,
   UserType,
 } from "../../global.types";
 
@@ -123,7 +127,108 @@ export interface DeleteCommentType {
   payload: string; //commentId
 }
 
+//*********************AccountType ************ */
+
+
+export interface GetAllAccountType {
+  type: "GET_ALL_ACCOUNT";
+  payload: AccountType[];
+}
+
+export interface GetAccounByIdType {
+  type: "GET_ACCOUNT_BY_ID";
+  payload: AccountType;
+}
+
+export interface CreateAccountType {
+  type: "CREATE_ACCOUNT";
+  payload: AccountType;
+}
+
+export interface UpdateAccountType {
+  type: "UPDATE_ACCOUNT";
+  payload: AccountType;
+}
+
+export interface UpdateAccountErrorType {
+  type: "UPDATE_ACCOUNT_ERROR";
+}
+export interface ResetAccountType {
+  type: "RESET_ACCOUNT";
+}
+
+
+export interface GetAllBeneficiaryType {
+  type: "GET_ALL_BENEFICIARY";
+  payload: BeneficiaryType[];
+}
+
+export interface GetBeneficiaryByIdType {
+  type: "GET_BENEFICIARY_BY_ID";
+  payload: BeneficiaryType;
+}
+
+export interface CreateBeneficiaryType {
+  type: "CREATE_BENEFICIARY";
+  payload: BeneficiaryType;
+}
+
+export interface UpdateBeneficiaryType {
+  type: "UPDATE_BENEFICIARY";
+  payload: BeneficiaryType;
+}
+
+export interface UpdateBeneficiaryErrorType {
+  type: "UPDATE_BENEFICIARY_ERROR";
+}
+export interface ResetBeneficiaryType {
+  type: "RESET_BENEFICIARY";
+}
+
+export interface DeleteBeneficiaryType {
+  type: "DELETE_BENEFICIARY";
+  payload: {
+    id: string;
+  };
+}
+
+export interface CreateTransferMoneyType {
+  type: "CREATE_TRANSFER_MONEY";
+  payload: TransferMoneyType;
+}
+
+export interface TransferMoneyErrorType {
+  type: "TRANSFER_MONEY_ERROR";
+}
+
+export interface GetAllOtherBeneficiaryAccountsType {
+  type: "GET_ALL_OTHER_BENEFICIARY_ACCOUNTS";
+  payload: OtherBeneficiaryAccountsType[];
+}
+
+//*********************AccountType End ************ */
+
 export type AppActionTypes =
+  | GetAllAccountType
+  | GetAccounByIdType
+  | CreateAccountType
+  | UpdateAccountType
+  | ResetAccountType
+  | UpdateAccountErrorType
+
+  | GetAllBeneficiaryType
+  | GetBeneficiaryByIdType
+  | CreateBeneficiaryType
+  | UpdateBeneficiaryType
+  | UpdateBeneficiaryErrorType
+  | ResetBeneficiaryType
+  | DeleteBeneficiaryType
+
+  | CreateTransferMoneyType
+  | TransferMoneyErrorType
+
+  | GetAllOtherBeneficiaryAccountsType
+
   | SetAlertType
   | RemoveAlertType
   | clearAlertsType

@@ -1,9 +1,33 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
+import {
+  DashboardType,
+  OtherBeneficiaryAccountsType,
+} from "../../../../global.types";
 import Card from "../../../common/Card";
 
-type Props = {};
+const AddBeneficiary = ({
+  formData,
+  otherBeneficiary,
+  setFormData,
+  onSubmitClicked,
+}: {
+  formData: DashboardType;
+  otherBeneficiary: OtherBeneficiaryAccountsType[];
+  setFormData: (value: React.SetStateAction<DashboardType>) => void;
+  onSubmitClicked: any;
+}) => {
+  const { beneficiary } = formData;
 
-const AddBeneficiary = (props: Props) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => {
+      const beneficiary = {
+        ...prev.beneficiary,
+        [e.target.name]: e.target.value,
+      };
+      return { ...prev, beneficiary: beneficiary };
+    });
+  };
+
   return (
     <Card height="99%">
       <div className="container">
@@ -12,6 +36,13 @@ const AddBeneficiary = (props: Props) => {
             <h1>Add Beneficiary</h1>
           </div>
         </div>
+        {/* <div className="row">
+          <div className="col-md-12">
+            <select name="accountNumber" id="accountNumber">
+              <option value={-1}>Select Beneficiary Account </option>
+            </select>
+          </div>
+        </div> */}
         <div className="row">
           <div className="col-md-12">
             <input
@@ -19,6 +50,9 @@ const AddBeneficiary = (props: Props) => {
               type="text"
               className="form-control"
               placeholder="Enter Account Number"
+              onChange={onChange}
+              defaultValue={beneficiary?.accountNumber}
+              name="accountNumber"
             ></input>
           </div>
         </div>
@@ -29,6 +63,9 @@ const AddBeneficiary = (props: Props) => {
               type="text"
               className="form-control"
               placeholder="Confirm Account Number"
+              onChange={onChange}
+              defaultValue={beneficiary?.confirmAccountNumber}
+              name="confirmAccountNumber"
             ></input>
           </div>
         </div>
@@ -39,6 +76,9 @@ const AddBeneficiary = (props: Props) => {
               type="text"
               className="form-control"
               placeholder="Acount Holder Name"
+              onChange={onChange}
+              defaultValue={beneficiary?.acountHolderName}
+              name="acountHolderName"
             ></input>
           </div>
         </div>
@@ -49,10 +89,13 @@ const AddBeneficiary = (props: Props) => {
           <div className="col-md-12">
             <div className="form-check" style={{ width: "300px" }}>
               <input
+                defaultChecked={beneficiary?.typeOfAccount === "SB"}
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault1"
+                onChange={onChange}
+                name="typeOfAccount"
+                id="SB"
+                value="SB"
               />
               <label className="form-check-label" htmlFor="flexRadioDefault1">
                 &nbsp; Savings Account
@@ -60,10 +103,13 @@ const AddBeneficiary = (props: Props) => {
             </div>
             <div className="form-check" style={{ width: "300px" }}>
               <input
+                defaultChecked={beneficiary?.typeOfAccount === "CA"}
                 className="form-check-input"
                 type="radio"
-                name="flexRadioDefault"
-                id="flexRadioDefault2"
+                onChange={onChange}
+                name="typeOfAccount"
+                id="CA"
+                value="CA"
               />
               <label className="form-check-label" htmlFor="flexRadioDefault2">
                 &nbsp; Current Account
@@ -73,7 +119,14 @@ const AddBeneficiary = (props: Props) => {
         </div>
         <div className="row">
           <div className="col-md-12">
-            <button type="button">Submit</button>
+            <button
+              onClick={() => {
+                onSubmitClicked();
+              }}
+              type="button"
+            >
+              Submit
+            </button>
           </div>
         </div>
       </div>

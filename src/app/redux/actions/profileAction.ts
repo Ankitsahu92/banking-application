@@ -10,7 +10,6 @@ export const getCurrentUserProfile =
         try {
             const id = localStorage.getItem(AppConstant.ID)
             const response = await api.get<any>(`/users/${id}`);
-            console.log(response.data.data, "getCurrentUserProfile");
 
             dispatch({
                 type: "GET_PROFILE",
@@ -37,18 +36,14 @@ export const createOrUpdateProfile =
             try {
                 const id = localStorage.getItem(AppConstant.ID)
                 const result = await api.put<any>(`/users`, { ...data, id: id });
-                console.log(result, "createOrUpdateProfile");
 
                 // const { user, ...profileData } = result.data;
-                // console.log(JSON.stringify(profileData));
-                // console.log(JSON.stringify(api));
                 // dispatch({
                 //     type: "UPDATE_PROFILE",
                 //     payload: profileData,
                 // });
-                //navigate("/dashboard");
+                navigate("/dashboard");
             } catch (error: any) {
-                console.log(JSON.stringify(error));
 
                 //alertError(error);
                 dispatch({

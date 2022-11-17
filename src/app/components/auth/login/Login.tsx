@@ -19,7 +19,6 @@ const Login = ({ signIn, auth }: LoginProps) => {
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("onSubmit", e, formData);
     if (!formData.password || !formData.userName) {
       alert("please enter username and password");
     } else {
@@ -38,7 +37,6 @@ const Login = ({ signIn, auth }: LoginProps) => {
     //   const token = resp.data.data.token;
     //   localStorage.setItem(AppConstant.Token, token);
     //   const decodeToken: any = jwt(token);
-    //   console.log(decodeToken.user.name, "user");
     //   //localStorage.setItem("UserType", AppConstant.UserType.Customer);
     //   localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
     //   localStorage.setItem(AppConstant.UserName, decodeToken.user.name);

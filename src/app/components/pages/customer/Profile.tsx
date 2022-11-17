@@ -7,6 +7,7 @@ import {
   deleteAccount,
   getCurrentUserProfile,
 } from "../../../redux/actions/profileAction";
+
 import { AppState } from "../../../redux/store";
 import Card from "../../common/Card";
 
@@ -51,14 +52,15 @@ export const Profile = ({
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("onSubmit", e, formData);
     createOrUpdateProfile({ ...formData }, navigate);
   };
   const onlyNumberKey = (evt: any) => {
     // Only ASCII character in that range allowed
     var charCode = evt.which ? evt.which : evt.keyCode;
-    if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57))
+    if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+      evt.preventDefault();
       return false;
+    }
 
     return true;
   };

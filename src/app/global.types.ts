@@ -87,3 +87,56 @@ export interface PostType {
     comments: CommentType[];
     date: Date;
 }
+
+export interface TransactionHistoryType {
+    date: Date | string;
+    amount: number;
+    transactionType: string;
+    referenceNumber: string;
+    comment: string;
+    tranferAccount: string;
+}
+
+export interface AccountType {
+    id: string,
+    isEnabled: boolean,
+    initialDeposit: number,
+    accountNumber: string,
+    typeOfAccount: string,
+    userID: string,
+    transaction?: TransactionHistoryType[]
+}
+
+export interface OtherBeneficiaryAccountsType {
+    accountNumber: string;
+    id: string;
+}
+
+
+export interface BeneficiaryType {
+    id: string,
+    isEnabled: boolean,
+    userID: string,
+    acountHolderName: string,
+    accountNumber: string,
+    confirmAccountNumber: string,
+    typeOfAccount: string,
+}
+
+
+export interface TransferMoneyType {
+    id: string,
+    tranferToID: string,
+    tranferFromID: string,
+    amount: number,
+    comment: string
+}
+
+
+export interface DashboardType {
+    account: AccountType,
+    beneficiary: BeneficiaryType
+    transferMoney: TransferMoneyType
+}
+
+
