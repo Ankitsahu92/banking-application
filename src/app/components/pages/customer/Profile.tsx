@@ -1,6 +1,7 @@
+import { bindActionCreators } from "@reduxjs/toolkit";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { connect } from "react-redux";
-import { NavigateFunction, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { ProfileType } from "../../../global.types";
 import {
   createOrUpdateProfile,
@@ -11,16 +12,22 @@ import {
 import { AppState } from "../../../redux/store";
 import Card from "../../common/Card";
 
-export const Profile = ({
-  profileData,
-  profileLoading,
-  createOrUpdateProfile,
-  getCurrentUserProfile,
-  deleteAccount,
-}: ProfileProps) => {
+export const Profile = () => {
+  const profileData = useSelector((state: AppState) => state.profile.profile);
+  const dispatch = useDispatch();
+  const getCurrentUserProfileAction = bindActionCreators(
+    getCurrentUserProfile,
+    dispatch
+  );
+  const createOrUpdateProfileAction = bindActionCreators(
+    createOrUpdateProfile,
+    dispatch
+  );
+  const deleteAccountAction = bindActionCreators(deleteAccount, dispatch);
+
   useEffect(() => {
-    getCurrentUserProfile();
-  }, [getCurrentUserProfile]);
+    getCurrentUserProfileAction();
+  }, []);
 
   const navigate = useNavigate();
 
@@ -52,7 +59,7 @@ export const Profile = ({
 
   const onSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
-    createOrUpdateProfile({ ...formData }, navigate);
+    createOrUpdateProfileAction({ ...formData }, navigate);
   };
   const onlyNumberKey = (evt: any) => {
     // Only ASCII character in that range allowed
@@ -187,28 +194,30 @@ export const Profile = ({
   );
 };
 
-Profile.propTypes = {};
+export default Profile;
 
-const mapStateToProps = (state: AppState) => ({
-  profileData: state.profile.profile,
-  profileLoading: state.profile.loading,
-});
+// Profile.propTypes = {};
 
-const mapDispatchToProps = {
-  createOrUpdateProfile,
-  getCurrentUserProfile,
-  deleteAccount,
-};
+// const mapStateToProps = (state: AppState) => ({
+//   profileData: state.profile.profile,
+//   profileLoading: state.profile.loading,
+// });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+// const mapDispatchToProps = {
+//   createOrUpdateProfile,
+//   getCurrentUserProfile,
+//   deleteAccount,
+// };
 
-interface ProfileProps {
-  profileData: ProfileType | null | undefined;
-  getCurrentUserProfile: VoidFunction;
-  createOrUpdateProfile: (
-    data: ProfileType,
-    navigate: NavigateFunction
-  ) => void;
-  deleteAccount: VoidFunction;
-  profileLoading: boolean;
-}
+// export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+
+// interface ProfileProps {
+//   profileData: ProfileType | null | undefined;
+//   getCurrentUserProfile: VoidFunction;
+//   createOrUpdateProfile: (
+//     data: ProfileType,
+//     navigate: NavigateFunction
+//   ) => void;
+//   deleteAccount: VoidFunction;
+//   profileLoading: boolean;
+// }

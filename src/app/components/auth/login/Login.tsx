@@ -1,15 +1,19 @@
 import React, { ChangeEvent, useState } from "react";
 import styles from "./Login.module.scss";
 import bankImg from "../../../../assets/images/bank.webp";
-import { Link, NavigateFunction, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ILogin } from "../../../modal/ILogin";
-import { connect } from "react-redux";
-import { AuthState } from "../../../redux/reducers/auth";
-import { LoginParamsType } from "../../../global.types";
 import { AppState } from "../../../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { bindActionCreators } from "@reduxjs/toolkit";
 import { signIn } from "../../../redux/actions/authAction";
 
-const Login = ({ signIn, auth }: LoginProps) => {
+const Login = () => {
+  const auth = useSelector((state: AppState) => state.auth);
+  const dispatch = useDispatch();
+  const signInAction = bindActionCreators(signIn, dispatch);
+  console.log(auth, "auth");
+
   const [formData, setFormData] = useState<ILogin>({
     password: "",
     userName: "",
@@ -22,7 +26,7 @@ const Login = ({ signIn, auth }: LoginProps) => {
     if (!formData.password || !formData.userName) {
       alert("please enter username and password");
     } else {
-      signIn(
+      signInAction(
         {
           userName: formData.userName,
           password: formData.password,
@@ -30,21 +34,6 @@ const Login = ({ signIn, auth }: LoginProps) => {
         navigate
       );
     }
-    // try {
-    //   const resp = await api.post("/auth", {
-    //     ...formData,
-    //   });
-    //   const token = resp.data.data.token;
-    //   localStorage.setItem(AppConstant.Token, token);
-    //   const decodeToken: any = jwt(token);
-    //   //localStorage.setItem("UserType", AppConstant.UserType.Customer);
-    //   localStorage.setItem(AppConstant.UserType, decodeToken.user.userType);
-    //   localStorage.setItem(AppConstant.UserName, decodeToken.user.name);
-    //   localStorage.setItem(AppConstant.ID, decodeToken.user.id);
-    //   return navigate("/dashboard");
-    // } catch (e) {
-    //   console.error(e);
-    // }
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -130,16 +119,4 @@ const Login = ({ signIn, auth }: LoginProps) => {
   );
 };
 
-Login.propTypes = {};
-
-const mapStateToProps = (state: AppState) => ({ auth: state.auth });
-
-const mapDispatchToProps = { signIn };
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
-
-interface LoginProps {
-  // setAlert : typeof SetAlert
-  signIn: (signInParams: LoginParamsType, navigate: NavigateFunction) => void;
-  auth: AuthState;
-}
+export default Login;
